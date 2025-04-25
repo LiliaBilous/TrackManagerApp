@@ -104,7 +104,3 @@ All interactive elements include proper `data-testid` attributes:
 
 ---
 
-## 📚 License
-MIT — For test use only.
-
----
