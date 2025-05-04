@@ -47,10 +47,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-.form-input:focus {
-  border-color: var(--secondary-alt-color);
-}
-
 .error-text {
   color: var(--warning-color);
   font-size: 0.875rem;
