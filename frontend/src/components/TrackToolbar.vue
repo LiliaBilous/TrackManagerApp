@@ -192,7 +192,6 @@ const isFilterActive = computed(() => {
   background-color: transparent;
   border: 1px solid var(--white-color);
   width: 30%;
-  font-size: 1rem;
   font-weight: 500;
   outline: none;
 }
@@ -276,5 +275,21 @@ const isFilterActive = computed(() => {
   white-space: nowrap;
   border: 0;
 }
+@media screen and (max-width: 20rem) {
+.toolbar__container {
+    padding: 0.35rem;
+}
+.genre-tabs {
+    width: 100%;
+    gap: 0.25rem;
+}
 
+.genre-tab {
+  padding: 0.25rem 0.5rem;
+  border-radius: .5rem;
+}
+.toolbar__footer {
+    gap: 0.25rem;
+}
+}
 </style>
