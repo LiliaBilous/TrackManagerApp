@@ -28,4 +28,15 @@
 .footer__link:hover{
   color: var(--accent-color);
 }
+@media screen and (max-width: 50rem) {
+  .footer {
+    width: 100%;
+  }
+  .footer__container{
+  flex-direction: column;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  }
+
+}
 </style>

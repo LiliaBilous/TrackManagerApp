@@ -40,7 +40,7 @@
       <span :data-testid="`audio-progress-${trackData.id}`">
         {{ currentTime }} / {{ duration }}
       </span>
-      <button type="button" @click="removeAudioFile" class="button danger small">Remove File</button>
+      <button type="button" @click="removeAudioFile" class="button danger">Remove File</button>
     </div>
   </div>
 </template>
@@ -165,7 +165,7 @@ onUnmounted(() => {
 .controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .audio-hidden {
@@ -175,4 +175,20 @@ onUnmounted(() => {
 .play-button {
   background-color: var(--secondary-alt-color);
 }
+@media screen and (max-width: 50rem) {
+  .audio-player {
+  padding: 0.25rem;
+  margin-top: 16px;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.waveform {
+  width: 100%;
+}
+.controls {
+  width: 100%;
+  justify-content: space-between;
+}
+}
 </style>
+
