@@ -29,7 +29,7 @@
         aria-label="Filter options"
       >
         <div class="toolbar__filter-genre">
-          <label>Filter by Genre:</label>
+          <p>Filter by Genre:</p>
           <div class="genre-tabs" role="group" aria-label="Genre tabs">
             <button
               v-for="genre in availableGenres"

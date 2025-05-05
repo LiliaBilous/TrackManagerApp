@@ -8,7 +8,8 @@
             <label class="custom-checkbox">
               <input :data-testid="`track-checkbox-${track.id}`" type="checkbox"
                 :checked="selectedIds.includes(track.id)"
-                @change="$emit('update:selected-ids', toggleSelection(track.id))" />
+                @change="$emit('update:selected-ids', toggleSelection(track.id))" 
+                :id="`${track.id}`"/>
               <span class="checkmark"></span>
             </label>
             <img :src="track.coverImage || defaultImage" alt="cover" class="track-item__image" />
@@ -19,17 +20,9 @@
               <p class="track-item__genre">{{ track.genres.join(', ') }}</p>
             </div>
           </div>
-          <div class="track-item__actions">
-            <button :aria-label="`Upload audio file for ${track.title}`" :data-testid="`upload-track-${track.id}`"
-              v-show="!track.audioFile" @click="$emit('upload', track)"
-              class="track-item__button button upload-button">Upload</button>
-            <button :aria-label="`${isPlayerVisible ? 'Hide' : 'Show'} player for ${track.title}`" v-if="track.audioFile" @click="handlePlay(track)" class="track-item__button button play-button">{{
-              isPlayerVisible ? "Hide player" : 'Player' }}</button>
-            <button :aria-label="`Edit metadata for ${track.title}`" :data-testid="`edit-track-${track.id}`" @click="$emit('edit', track)"
-              class="track-item__button button edit-button">Edit</button>
-            <button :aria-label="`Delete ${track.title}`" :data-testid="`delete-track-${track.id}`" @click="$emit('delete', track)"
-              class="track-item__button button delete-button">Delete</button>
-          </div>
+          <TrackActionsButton :track="track" @edit="$emit('edit', track)"
+            @delete="$emit('delete', track)" @upload="$emit('upload', track)" @play="handlePlay(track)" />
+
         </div>
         <TrackWaveForm class="track-item__waveform" @reset="id => emits('reset', id)" :slug="track.slug"
           v-if="track.audioFile && track.id === playingTrackId" />
@@ -43,9 +36,11 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 import TrackWaveForm from '@/components/TrackWaveForm.vue'
+import TrackActionsButton from '@/components/TrackActionsButton.vue'
+
 const props = defineProps({
   tracks: Array,
   selectedIds: Array,
@@ -54,10 +49,12 @@ const props = defineProps({
 const playingTrackId = ref(null)
 const isPlayerVisible = ref(false)
 
+
 function handlePlay(track) {
   playingTrackId.value = playingTrackId.value === track.id ? null : track.id
   isPlayerVisible.value = !isPlayerVisible.value
 }
+
 const emits = defineEmits(['edit', 'delete', 'update:selected-ids', 'upload', 'reset'])
 
 const defaultImage = 'https://placehold.co/100'
@@ -91,7 +88,6 @@ watch(
     }
   }
 )
-
 </script>
 <style>
 .track-list__track-item {
@@ -107,6 +103,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 0;
 }
 
 .track-item__card {
@@ -123,8 +120,8 @@ watch(
 }
 
 .track-item__image {
-  width: 50px;
-  height: 50px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.5rem;
 }
 
@@ -142,30 +139,6 @@ watch(
   font-size: 0.875rem;
 }
 
-.track-item__actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.track-item__button {
-  color: var(--primary-color);
-  font-weight: 500;
-  transition: all 0.3s ease-in-out;
-}
-.track-item__button:hover {
-  text-decoration-line: underline;
-}
-.edit-button {
-  color: var(--warning-color);
-}
-
-.upload-button {
-  color: var(--primary-color);
-}
-
-.delete-button {
-  color: var(--accent-color);
-}
 
 .list-enter-active,
 .list-leave-active {
@@ -177,4 +150,35 @@ watch(
   opacity: 0;
   transform: translateX(30px);
 }
+
+@media screen and (max-width: 50rem) {
+  .track-list__track-item {
+    padding: 0.5rem;
+  }
+}
+
+
+@media screen and (max-width: 30rem) {
+  .track-item__content {
+  gap: 0.5rem;
+}
+.track-item__image {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.track-item__title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.track-item__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+
+.track-item__genre {
+  font-size: 0.75rem;
+}
+}
+
 </style>
