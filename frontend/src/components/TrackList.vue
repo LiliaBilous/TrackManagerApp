@@ -20,12 +20,21 @@
               <p class="track-item__genre">{{ track.genres.join(', ') }}</p>
             </div>
           </div>
-          <TrackActionsButton :track="track" @edit="$emit('edit', track)"
-            @delete="$emit('delete', track)" @upload="$emit('upload', track)" @play="handlePlay(track)" />
+          <TrackActionsButton
+  :track="track"
+  @edit="$emit('edit', track)"
+  @delete="$emit('delete', track)"
+  @upload="$emit('upload', track)"
+  @play-track="handlePlay" />
 
         </div>
-        <TrackWaveForm class="track-item__waveform" @reset="id => emits('reset', id)" :slug="track.slug"
-          v-if="track.audioFile && track.id === playingTrackId" />
+        <TrackWaveForm
+  class="track-item__waveform"
+  @reset="id => emits('reset', id)"
+  :slug="track.slug"
+  v-if="track.audioFile && playingTrackId === track.id"
+/>
+
 
       </div>
     </TransitionGroup>
@@ -50,9 +59,10 @@ const playingTrackId = ref(null)
 const isPlayerVisible = ref(false)
 
 
-function handlePlay(track) {
-  playingTrackId.value = playingTrackId.value === track.id ? null : track.id
+function handlePlay(trackId) {
+  playingTrackId.value = playingTrackId.value === trackId ? null : trackId;
   isPlayerVisible.value = !isPlayerVisible.value
+  console.log(`Кнопку "Play" натиснуто для треку з ID: ${trackId}`);
 }
 
 const emits = defineEmits(['edit', 'delete', 'update:selected-ids', 'upload', 'reset'])

@@ -26,7 +26,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const props = defineProps({
   track: Object,
 })
-const playingTrackId = ref(null);
+const emit = defineEmits(['edit', 'delete', 'upload', 'play-track']);
+
 const isPlayerVisible = ref(false);
 const isMobile = ref(false);
 const activeTrackId = ref(null);
@@ -34,8 +35,8 @@ const isDropdownOpen = ref(false);
 
 
 function handlePlay(track) {
-  playingTrackId.value = playingTrackId.value === track.id ? null : track.id;
   isPlayerVisible.value = !isPlayerVisible.value;
+  emit('play-track', track.id); 
 }
 
 function toggleMenu(id) {
