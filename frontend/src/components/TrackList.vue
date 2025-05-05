@@ -19,17 +19,9 @@
               <p class="track-item__genre">{{ track.genres.join(', ') }}</p>
             </div>
           </div>
-          <div class="track-item__actions">
-            <button :aria-label="`Upload audio file for ${track.title}`" :data-testid="`upload-track-${track.id}`"
-              v-show="!track.audioFile" @click="$emit('upload', track)"
-              class="track-item__button button upload-button">Upload</button>
-            <button :aria-label="`${isPlayerVisible ? 'Hide' : 'Show'} player for ${track.title}`" v-if="track.audioFile" @click="handlePlay(track)" class="track-item__button button play-button">{{
-              isPlayerVisible ? "Hide player" : 'Player' }}</button>
-            <button :aria-label="`Edit metadata for ${track.title}`" :data-testid="`edit-track-${track.id}`" @click="$emit('edit', track)"
-              class="track-item__button button edit-button">Edit</button>
-            <button :aria-label="`Delete ${track.title}`" :data-testid="`delete-track-${track.id}`" @click="$emit('delete', track)"
-              class="track-item__button button delete-button">Delete</button>
-          </div>
+          <TrackActionsButton :track="track" @edit="$emit('edit', track)"
+            @delete="$emit('delete', track)" @upload="$emit('upload', track)" @play="handlePlay(track)" />
+
         </div>
         <TrackWaveForm class="track-item__waveform" @reset="id => emits('reset', id)" :slug="track.slug"
           v-if="track.audioFile && track.id === playingTrackId" />
@@ -43,9 +35,11 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 import TrackWaveForm from '@/components/TrackWaveForm.vue'
+import TrackActionsButton from '@/components/TrackActionsButton.vue'
+
 const props = defineProps({
   tracks: Array,
   selectedIds: Array,
@@ -54,10 +48,12 @@ const props = defineProps({
 const playingTrackId = ref(null)
 const isPlayerVisible = ref(false)
 
+
 function handlePlay(track) {
   playingTrackId.value = playingTrackId.value === track.id ? null : track.id
   isPlayerVisible.value = !isPlayerVisible.value
 }
+
 const emits = defineEmits(['edit', 'delete', 'update:selected-ids', 'upload', 'reset'])
 
 const defaultImage = 'https://placehold.co/100'
@@ -91,7 +87,6 @@ watch(
     }
   }
 )
-
 </script>
 <style>
 .track-list__track-item {
@@ -107,6 +102,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 0;
 }
 
 .track-item__card {
@@ -152,9 +148,11 @@ watch(
   font-weight: 500;
   transition: all 0.3s ease-in-out;
 }
+
 .track-item__button:hover {
   text-decoration-line: underline;
 }
+
 .edit-button {
   color: var(--warning-color);
 }
@@ -176,5 +174,44 @@ watch(
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+@media screen and (max-width: 50rem) {
+  .track-list__track-item {
+
+    padding: 0.5rem;
+  }
+
+}
+
+.track-item__actions-wrapper {
+  position: relative;
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 </style>
