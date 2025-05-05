@@ -8,7 +8,8 @@
             <label class="custom-checkbox">
               <input :data-testid="`track-checkbox-${track.id}`" type="checkbox"
                 :checked="selectedIds.includes(track.id)"
-                @change="$emit('update:selected-ids', toggleSelection(track.id))" />
+                @change="$emit('update:selected-ids', toggleSelection(track.id))" 
+                :id="`${track.id}`"/>
               <span class="checkmark"></span>
             </label>
             <img :src="track.coverImage || defaultImage" alt="cover" class="track-item__image" />
@@ -119,8 +120,8 @@ watch(
 }
 
 .track-item__image {
-  width: 50px;
-  height: 50px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.5rem;
 }
 
@@ -138,32 +139,6 @@ watch(
   font-size: 0.875rem;
 }
 
-.track-item__actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.track-item__button {
-  color: var(--primary-color);
-  font-weight: 500;
-  transition: all 0.3s ease-in-out;
-}
-
-.track-item__button:hover {
-  text-decoration-line: underline;
-}
-
-.edit-button {
-  color: var(--warning-color);
-}
-
-.upload-button {
-  color: var(--primary-color);
-}
-
-.delete-button {
-  color: var(--accent-color);
-}
 
 .list-enter-active,
 .list-leave-active {
@@ -178,40 +153,32 @@ watch(
 
 @media screen and (max-width: 50rem) {
   .track-list__track-item {
-
     padding: 0.5rem;
   }
-
 }
 
-.track-item__actions-wrapper {
-  position: relative;
+
+@media screen and (max-width: 30rem) {
+  .track-item__content {
+  gap: 0.5rem;
+}
+.track-item__image {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.track-item__title {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.dropdown-wrapper {
-  position: relative;
+.track-item__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-color);
 }
 
-.dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  min-width: 120px;
+.track-item__genre {
+  font-size: 0.75rem;
+}
 }
 
-.dropdown-item {
-  padding: 0.5rem 1rem;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
 </style>
