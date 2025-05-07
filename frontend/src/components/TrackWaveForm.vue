@@ -148,8 +148,6 @@ onUnmounted(() => {
 
 <style scoped>
 .audio-player {
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
   padding: 1rem;
   margin-top: 16px;
   display: flex;
@@ -159,7 +157,7 @@ onUnmounted(() => {
 }
 
 .waveform {
-  width: 70%;
+  width: 100%;
 }
 
 .controls {
@@ -182,9 +180,7 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 0.5rem;
 }
-.waveform {
-  width: 100%;
-}
+
 .controls {
   width: 100%;
   justify-content: space-between;
