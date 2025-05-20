@@ -14,6 +14,8 @@
     --border-color: #B5B7C0;
     --grey-fill-color: #ededed;
     --white-color: #fff;
+    /* hero */
+    --hero-height: 600px;
 }
 
 body {
@@ -48,7 +50,7 @@ body {
 
 .hero {
     position: relative;
-    height: 600px;
+    height: var(--hero-height);
     width: 100%;
     background: center / cover url(@/assets/image.webp) no-repeat;
 }
@@ -67,14 +69,15 @@ body {
 }
 
 .main {
-    position: relative;
-    z-index: 3;
-    margin-top: -10rem;
+    position: absolute;
+    top: calc(var(--hero-height) * 0.75);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     background: var(--white-color);
     border-radius: 0.5rem;
     padding: 1.5rem;
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    width: 90%;
 }
 
 .main__container {
@@ -112,13 +115,15 @@ button:focus-visible {
 }
 
 @media screen and (max-width: 30rem) {
+    :root {
+        --hero-height: 250px;
+    }
+}
+
+@media screen and (max-width: 30rem) {
     body {
         font-size: .75rem;
         line-height: 1;
-    }
-
-    .hero {
-        height: 250px;
     }
 
     .hero__content {
@@ -128,7 +133,6 @@ button:focus-visible {
     .main {
         padding: 0.5rem;
         width: 96%;
-        margin-top: -6.5rem;
     }
 
     .main__container {

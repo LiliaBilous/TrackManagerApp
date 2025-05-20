@@ -1,17 +1,7 @@
 <template>
-  <div
-    v-if="trackData && trackData.audioFile"
-    :data-testid="`audio-player-${trackData.id}`"
-    class="audio-player"
-  >
-    <audio
-      ref="audioRef"
-      :src="trackData.audioFile"
-      preload="auto"
-      @timeupdate="updateProgress"
-      @loadedmetadata="updateDuration"
-      class="audio-hidden"
-    >
+  <div v-if="trackData && trackData.audioFile" :data-testid="`audio-player-${trackData.id}`" class="audio-player">
+    <audio ref="audioRef" :src="trackData.audioFile" preload="auto" @timeupdate="updateProgress"
+      @loadedmetadata="updateDuration" class="audio-hidden">
       Your browser does not support the audio element.
     </audio>
 
@@ -20,20 +10,10 @@
 
     <!-- Controls -->
     <div class="controls">
-      <button
-        v-if="!isPlaying"
-        @click="play"
-        :data-testid="`play-button-${trackData.id}`"
-        class="button play-button"
-      >
+      <button v-if="!isPlaying" @click="play" :data-testid="`play-button-${trackData.id}`" class="button play-button">
         Play
       </button>
-      <button
-        v-else
-        @click="pause"
-        class="button play-button"
-        :data-testid="`pause-button-${trackData.id}`"
-      >
+      <button v-else @click="pause" class="button play-button" :data-testid="`pause-button-${trackData.id}`">
         Pause
       </button>
 
@@ -164,6 +144,8 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .audio-hidden {
@@ -173,18 +155,15 @@ onUnmounted(() => {
 .play-button {
   background-color: var(--secondary-alt-color);
 }
+
 @media screen and (max-width: 50rem) {
   .audio-player {
-  padding: 0.25rem;
-  margin-top: 16px;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+    padding: 0.25rem;
+    margin-top: 16px;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-.controls {
-  width: 100%;
-  justify-content: space-between;
-}
+
 }
 </style>
-

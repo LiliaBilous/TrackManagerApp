@@ -120,6 +120,7 @@
   padding: 0.5rem;
   font-size: 0.875rem;
 }
+
 /* genres */
 .genre-wrapper {
   display: flex;
@@ -137,9 +138,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 1px solid transparent;
+  color: var(--white-color);
+  background-color: var(--accent-color);
   font-size: 0.875rem;
+  font-weight: 500;
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
 
@@ -152,14 +155,17 @@
   font-size: 1rem;
   line-height: 1;
   cursor: pointer;
-  color: var(--primary-color);
+  color: var(--white-color);
   transition: color 0.3s ease-in-out;
 }
-.genre-tag:hover{
+
+.genre-tag:hover {
+  background-color: transparent;
   border: 1px solid var(--secondary-alt-color);
   color: var(--secondary-alt-color);
 }
-.genre-tag button:hover {
+
+.genre-tag:hover button {
   color: var(--secondary-alt-color);
 }
 
@@ -167,6 +173,7 @@
   outline: none;
   background-color: transparent;
 }
+
 @media screen and (max-width: 40rem) {
   .modal-content {
     width: 90%;
