@@ -6,7 +6,8 @@
 :root {
     /* colors */
     --primary-color: #25a7da;
-    --accent-color: #b8002a;
+    --accent-color: #ff003c;
+    --secondary-color: #dc006e;
     --secondary-alt-color: #823aff;
     --warning-color: #e76026;
 
@@ -41,10 +42,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    min-height: 100vh;
+    max-height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     gap: 1rem;
 }
 
@@ -69,10 +69,9 @@ body {
 }
 
 .main {
-    position: absolute;
-    top: calc(var(--hero-height) * 0.75);
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    z-index: 3;
+    margin-top: calc(var(--hero-height)*(-0.25));
     width: 90%;
     background: var(--white-color);
     border-radius: 0.5rem;

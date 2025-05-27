@@ -8,8 +8,7 @@
             <label class="custom-checkbox">
               <input :data-testid="`track-checkbox-${track.id}`" type="checkbox"
                 :checked="selectedIds.includes(track.id)"
-                @change="$emit('update:selected-ids', toggleSelection(track.id))" 
-                :id="`${track.id}`"/>
+                @change="$emit('update:selected-ids', toggleSelection(track.id))" :id="`${track.id}`" />
               <span class="checkmark"></span>
             </label>
             <img :src="track.coverImage || defaultImage" alt="cover" class="track-item__image" />
@@ -20,22 +19,12 @@
               <p class="track-item__genre">{{ track.genres.join(', ') }}</p>
             </div>
           </div>
-          <TrackActionsButton
-  :track="track"
-  @edit="$emit('edit', track)"
-  @delete="$emit('delete', track)"
-  @upload="$emit('upload', track)"
-  @play-track="handlePlay" />
+          <TrackActionsButton :track="track" @edit="$emit('edit', track)" @delete="$emit('delete', track)"
+            @upload="$emit('upload', track)" @play-track="handlePlay" />
 
         </div>
-        <TrackWaveForm
-  class="track-item__waveform"
-  @reset="id => emits('reset', id)"
-  :slug="track.slug"
-  v-if="track.audioFile && playingTrackId === track.id"
-/>
-
-
+        <TrackWaveForm class="track-item__waveform" @reset="id => emits('reset', id)" :slug="track.slug"
+          v-if="track.audioFile && playingTrackId === track.id" />
       </div>
     </TransitionGroup>
     <div v-else>
@@ -170,25 +159,26 @@ watch(
 
 @media screen and (max-width: 30rem) {
   .track-item__content {
-  gap: 0.5rem;
-}
-.track-item__image {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-.track-item__title {
-  font-size: 1rem;
-  font-weight: 600;
-}
+    gap: 0.5rem;
+  }
 
-.track-item__subtitle {
-  font-size: 0.85rem;
-  color: var(--text-color);
-}
+  .track-item__image {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 
-.track-item__genre {
-  font-size: 0.75rem;
-}
-}
+  .track-item__title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
 
+  .track-item__subtitle {
+    font-size: 0.85rem;
+    color: var(--text-color);
+  }
+
+  .track-item__genre {
+    font-size: 0.75rem;
+  }
+}
 </style>

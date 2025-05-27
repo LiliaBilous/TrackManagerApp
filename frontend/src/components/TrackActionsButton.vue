@@ -1,21 +1,19 @@
 <template>
   <div class="track-item__actions-wrapper">
     <div>
-      <button @click="toggleMenu(track.id)"
-        :class="isMobile ? 'button more-button' : 'more-button-hidden'"
+      <button @click="toggleMenu(track.id)" :class="isMobile ? 'button more-button' : 'more-button-hidden'"
         :aria-label="`Actions for ${track.title}`">⋮</button>
       <div :class="isMobile && activeTrackId === track.id && isDropdownOpen ? 'dropdown-menu' : 'track-item__actions'"
         v-if="!isMobile || (isMobile && activeTrackId === track.id)">
         <button :aria-label="`Upload audio file for ${track.title}`" :data-testid="`upload-track-${track.id}`"
-          v-show="!track.audioFile" @click="$emit('upload', track)"
-          class="track-item__button button upload-button">Upload</button>
+          v-show="!track.audioFile" @click="$emit('upload', track)" class="track-item__button button">Upload</button>
         <button :aria-label="`${isPlayerVisible ? 'Hide' : 'Show'} player for ${track.title}`" v-if="track.audioFile"
-          @click="handlePlay(track)" class="track-item__button button play-button">{{
+          @click="handlePlay(track)" class="track-item__button button">{{
             isPlayerVisible ? "Hide player" : 'Player' }}</button>
         <button :aria-label="`Edit metadata for ${track.title}`" :data-testid="`edit-track-${track.id}`"
-          @click="$emit('edit', track)" class="track-item__button button edit-button">Edit</button>
+          @click="$emit('edit', track)" class="track-item__button button ">Edit</button>
         <button :aria-label="`Delete ${track.title}`" :data-testid="`delete-track-${track.id}`"
-          @click="$emit('delete', track)" class="track-item__button button delete-button">Delete</button>
+          @click="$emit('delete', track)" class="track-item__button button ">Delete</button>
       </div>
     </div>
   </div>
@@ -36,7 +34,7 @@ const isDropdownOpen = ref(false);
 
 function handlePlay(track) {
   isPlayerVisible.value = !isPlayerVisible.value;
-  emit('play-track', track.id); 
+  emit('play-track', track.id);
 }
 
 function toggleMenu(id) {
@@ -71,8 +69,6 @@ onUnmounted(() => {
 <style>
 .track-item__actions-wrapper {}
 
-.track-item__actions-desctop {}
-
 .more-button-hidden,
 .track-item__actions-mobile-hidden,
 .track-item__actions-desktop-hidden {
@@ -87,16 +83,17 @@ onUnmounted(() => {
   border: 1px solid transparent;
   border-radius: 0.5rem;
 }
+
 .more-button:hover,
 .more-button:focus-visible {
-  border-color: var( --secondary-alt-color);
+  border-color: var(--secondary-alt-color);
 }
 
 .dropdown-menu {
   position: absolute;
   top: 100%;
   right: -10%;
-  background-color: var( --grey-fill-color);
+  background-color: var(--grey-fill-color);
   border: 1px solid var(--border-color);
   border-radius: 0.25rem;
   padding: 0.5rem;
@@ -121,18 +118,6 @@ onUnmounted(() => {
 
 .track-item__button:hover {
   background-color: var(--white-color);
-}
-
-.edit-button {
-  color: var(--warning-color);
-}
-
-.upload-button {
-  color: var(--primary-color);
-}
-
-.delete-button {
-  color: var(--accent-color);
 }
 
 .track-item__actions-wrapper {

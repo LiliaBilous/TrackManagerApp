@@ -55,7 +55,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import GenreSelector from '@/components/modals/GenreSelector.vue'
+import GenreSelector from '@/components/common/GenreSelector.vue'
 import { isValidImageUrl, validateTrackForm } from '@/utils/validation'
 
 const emit = defineEmits(['close', 'new-track'])

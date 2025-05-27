@@ -1,44 +1,26 @@
 <template>
   <header class="toolbar">
     <div class="toolbar__container">
-      <div class="tooolbar__actions">
-        <button
-          class="toolbar__button button"
-          @click="dropdownOpen = !dropdownOpen"
-          :aria-expanded="dropdownOpen.toString()"
-          aria-controls="filters-section"
-          aria-label="Toggle filters"
-        >
+      <div class="toolbar__actions">
+        <button class="toolbar__button button" @click="dropdownOpen = !dropdownOpen"
+          :aria-expanded="dropdownOpen.toString()" aria-controls="filters-section" aria-label="Toggle filters">
           {{ dropdownOpen ? 'Hide Filters' : 'Show Filters' }} <span>{{ dropdownOpen ? '▲' : '▼' }}</span>
         </button>
 
-        <button
-          class="toolbar__button reset-button button"
-          @click="resetFilters"
-          :disabled="!isFilterActive"
-          aria-label="Reset all filters"
-        >
+        <button class="toolbar__button reset-button button" @click="resetFilters" :disabled="!isFilterActive"
+          aria-label="Reset all filters">
           Reset Filters <span>&times;</span>
         </button>
       </div>
 
-      <div
-        class="toolbar__body"
-        v-if="dropdownOpen"
-        id="filters-section"
-        aria-label="Filter options"
-      >
+      <div class="toolbar__body" v-if="dropdownOpen" id="filters-section" aria-label="Filter options">
         <div class="toolbar__filter-genre">
           <p>Filter by Genre:</p>
           <div class="genre-tabs" role="group" aria-label="Genre tabs">
-            <button
-              v-for="genre in availableGenres"
-              :key="genre"
-              :class="['genre-tab', trackStore.genres[0] === genre ? 'active' : '']"
-              @click="selectGenre(genre)"
+            <button v-for="genre in availableGenres" :key="genre"
+              :class="['genre-tab', trackStore.genres[0] === genre ? 'active' : '']" @click="selectGenre(genre)"
               :aria-pressed="trackStore.genres[0] === genre"
-              :aria-label="trackStore.genres[0] === genre ? `Unselect genre ${genre}` : `Select genre ${genre}`"
-            >
+              :aria-label="trackStore.genres[0] === genre ? `Unselect genre ${genre}` : `Select genre ${genre}`">
               {{ genre }}
             </button>
           </div>
@@ -46,14 +28,8 @@
 
         <div class="toolbar__footer">
           <label for="sort-select" class="visually-hidden">Sort tracks</label>
-          <select
-            id="sort-select"
-            class="toolbar__sort input"
-            data-testid="sort-select"
-            v-model="trackStore.sort"
-            @change="trackStore.fetchTracks"
-            aria-label="Sort tracks"
-          >
+          <select id="sort-select" class="toolbar__sort input" data-testid="sort-select" v-model="trackStore.sort"
+            @change="trackStore.fetchTracks" aria-label="Sort tracks">
             <option disabled value="">Sort By</option>
             <option value="title">Title</option>
             <option value="artist">Artist</option>
@@ -62,28 +38,14 @@
           </select>
 
           <label for="search-input" class="visually-hidden">Search tracks</label>
-          <input
-            id="search-input"
-            class="toolbar__search input"
-            data-testid="search-input"
-            type="text"
-            v-model="trackStore.search"
-            @input="debouncedSearch"
-            placeholder="Search..."
-            aria-label="Search tracks by title or metadata"
-          />
+          <input id="search-input" class="toolbar__search input" data-testid="search-input" type="text"
+            v-model="trackStore.search" @input="debouncedSearch" placeholder="Search..."
+            aria-label="Search tracks by title or metadata" />
 
           <label for="filter-artist" class="visually-hidden">Filter by Artist</label>
-          <input
-            id="filter-artist"
-            class="toolbar__filter-input input"
-            data-testid="filter-artist"
-            type="text"
-            v-model="trackStore.artist"
-            @input="trackStore.fetchTracks"
-            placeholder="Filter by Artist"
-            aria-label="Filter tracks by artist"
-          />
+          <input id="filter-artist" class="toolbar__filter-input input" data-testid="filter-artist" type="text"
+            v-model="trackStore.artist" @input="trackStore.fetchTracks" placeholder="Filter by Artist"
+            aria-label="Filter tracks by artist" />
         </div>
       </div>
     </div>
@@ -147,6 +109,7 @@ const isFilterActive = computed(() => {
   border-radius: 0.5rem;
   background-color: var(--text-color);
   color: var(--white-color);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .toolbar__container {
@@ -154,11 +117,11 @@ const isFilterActive = computed(() => {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.25rem;
+  gap: 0.5rem;
   padding: 1rem;
 }
 
-.tooolbar__actions {
+.toolbar__actions {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -169,6 +132,19 @@ const isFilterActive = computed(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .toolbar__filter-genre {
@@ -194,15 +170,15 @@ const isFilterActive = computed(() => {
   width: 30%;
   font-weight: 500;
   outline: none;
+  transition: all 0.3s ease-in-out;
 }
 
-.toolbar__sort:focus-within ,
+.toolbar__sort:focus-within,
 .toolbar__search:focus-within,
 .toolbar__filter-input:focus-visible {
-  color: var(--accent-color);
-  border: 1px solid var(--accent-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
 }
-
 
 .genre-tabs {
   width: 100%;
@@ -213,7 +189,7 @@ const isFilterActive = computed(() => {
 }
 
 .genre-tab {
-  border: 1px solid #b8002a;
+  border: 1px solid var(--secondary-color);
   padding: 0.5rem 0.75rem;
   border-radius: 1rem;
   font-weight: 500;
@@ -223,8 +199,8 @@ const isFilterActive = computed(() => {
 
 .genre-tab:hover,
 .genre-tab.active {
-  background-color: #b8002a;
-  color: #fff;
+  background-color: var(--secondary-color);
+  color: var(--white-color);
   border: 1px solid transparent;
 }
 
@@ -235,6 +211,7 @@ const isFilterActive = computed(() => {
   align-items: center;
   gap: .5rem;
 }
+
 .toolbar__button:hover {
   background-color: var(--white-color);
   color: var(--text-color);
@@ -264,6 +241,7 @@ const isFilterActive = computed(() => {
   color: var(--border-color);
   cursor: not-allowed;
 }
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -275,21 +253,24 @@ const isFilterActive = computed(() => {
   white-space: nowrap;
   border: 0;
 }
+
 @media screen and (max-width: 20rem) {
-.toolbar__container {
+  .toolbar__container {
     padding: 0.35rem;
-}
-.genre-tabs {
+  }
+
+  .genre-tabs {
     width: 100%;
     gap: 0.25rem;
-}
+  }
 
-.genre-tab {
-  padding: 0.25rem 0.5rem;
-  border-radius: .5rem;
-}
-.toolbar__footer {
+  .genre-tab {
+    padding: 0.25rem 0.5rem;
+    border-radius: .5rem;
+  }
+
+  .toolbar__footer {
     gap: 0.25rem;
-}
+  }
 }
 </style>
