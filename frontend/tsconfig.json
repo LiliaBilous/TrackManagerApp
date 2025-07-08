@@ -1,0 +1,54 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    /* Base Options */
+    "types": ["node", "@playwright/test", "vite/client", "vue"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    // "verbatimModuleSyntax": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "strictNullChecks": true,
+
+    /* Output */
+    "outDir": "dist",
+    "sourceMap": true,
+
+    /* For libraries/monorepo */
+    "composite": true,
+    "declarationMap": true,
+
+    /* DOM support */
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "noImplicitAny": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "tests/e2e/**/*.ts",
+    "tests/component/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist", "tests"]
+}
