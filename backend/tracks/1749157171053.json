@@ -1,0 +1,16 @@
+{
+  "title": "Test",
+  "artist": "test",
+  "album": "test",
+  "genres": [
+    "Electronic",
+    "Hip Hop",
+    "Reggae"
+  ],
+  "coverImage": "https://placehold.co/10",
+  "slug": "test",
+  "id": "1749157171053",
+  "createdAt": "2025-06-05T20:59:31.053Z",
+  "updatedAt": "2025-06-23T09:43:48.904Z",
+  "audioFile": "1749157171053.mp3"
+}
