@@ -1,0 +1,62 @@
+:root {
+  --hero-height: 40rem;
+  --border-radius-0-5: 0.5rem;
+  --border-radius-1: 1rem;
+  --transition: all 0.3s ease-in-out;
+
+  --color-primary-pink: #ff4d6d;
+  --color-primary-orange: #ff5f0e;
+  --color-primary-purple: #a64dff;
+  --color-primary-blue: #4d88ff;
+  --color-primary-cyan: #00d1ff;
+  --color-bg-dark: #242323;
+  --color-text-base: #eaeaea;
+  --color-text-muted: #a0a0a0;
+  --color-text-inverted: #0a0a0a;
+
+  --color-bg-glass: rgba(36, 35, 35, 0.85);
+  --color-glow-soft: rgba(255, 255, 255, 0.05);
+  --color-accent-glow: rgba(216, 33, 67, 0.5);
+  --color-accent-glow-blue: rgba(0, 209, 255, 0.5);
+  --color-accent-glow-purple: rgba(166, 77, 255, 0.4);
+
+  --gradient-wave: linear-gradient(90deg,
+      var(--color-primary-purple),
+      var(--color-primary-pink),
+      var(--color-primary-orange),
+      var(--color-primary-blue));
+
+  --box-shadow-main: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --box-shadow-1: 0 0 10px var(--color-accent-glow);
+  --box-shadow-blue: 0 0 10px var(--color-accent-glow-blue);
+  --box-shadow-2: 0 0 10px var(--color-accent-glow-purple);
+  --box-shadow-button: 0 0 10px var(--color-glow-soft);
+}
+
+/* animations */
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+} */

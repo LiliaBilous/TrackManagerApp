@@ -1,0 +1,18 @@
+@media (width < 30rem) {
+  body {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .input {
+    padding: 0.25rem 0.5rem;
+  }
+
+  [class*='__container'] {
+    padding: 0 0.5rem;
+  }
+}
+
+@container (max-width: 40rem) {}
+
+@container (max-width: 50rem) {}
