@@ -44,7 +44,7 @@ export function useAudioPlayer(
   }
 
   const initWaveSurfer = () => {
-    if (!waveformRef.value || !audioRef.value || !audioUrl.value) return
+    if (!waveformRef.value || !audioUrl.value) return
 
     if (waveSurfer) {
       waveSurfer.destroy()
@@ -56,10 +56,12 @@ export function useAudioPlayer(
       waveColor: '#B5B7C0',
       progressColor: '#e76026',
       height: 60,
-      media: audioRef.value,
       interact: true,
     })
+
+    waveSurfer.load(audioUrl.value)
   }
+
 
   onUnmounted(() => {
     waveSurfer?.destroy()

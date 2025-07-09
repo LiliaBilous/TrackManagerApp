@@ -25,7 +25,11 @@ export const useTrackFilterStore = defineStore('trackFilter', () => {
     artist.value = pipe(O.fromNullable(query.artist), O.getWithDefault<string>(''))
     genre.value = pipe(O.fromNullable(query.genre), O.getWithDefault<string>(''))
     sort.value = pipe(O.fromNullable(query.sort), O.getWithDefault<string>(''))
-    page.value = pipe(O.fromNullable(query.page), O.getWithDefault<number>(1))
+    page.value = pipe(
+      O.fromNullable(query.page),
+      O.map((val) => typeof val === 'string' ? parseInt(val, 10) : val),
+      O.getWithDefault<number>(1)
+    )
   }
 
   function resetFilters() {

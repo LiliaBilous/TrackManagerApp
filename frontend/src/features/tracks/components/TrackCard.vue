@@ -3,22 +3,11 @@
     <div class="track-item__card">
       <div class="track-item__content">
         <label class="custom-checkbox">
-          <input
-            :data-testid="`track-checkbox-${track.id}`"
-            type="checkbox"
-            :checked="selected"
-            :aria-label="`Select track ${track.title}`"
-            @change="handleSelection"
-            :id="`${track.id}`"
-          />
+          <input :data-testid="`track-checkbox-${track.id}`" type="checkbox" :checked="selected"
+            :aria-label="`Select track ${track.title}`" @change="handleSelection" :id="`${track.id}`" />
           <span class="checkmark"></span>
         </label>
-        <img
-          loading="lazy"
-          :src="track.coverImage || DEFAULT_COVER_IMAGE"
-          alt="cover"
-          class="track-item__image"
-        />
+        <img loading="lazy" :src="track.coverImage || DEFAULT_COVER_IMAGE" alt="cover" class="track-item__image" />
         <div>
           <h2 :data-testid="`track-item-${track.id}-title`" class="track-item__title">
             {{ track.title }}
@@ -30,21 +19,13 @@
         </div>
       </div>
 
-      <TrackActionsButton
-        :track="track"
-        @edit="$emit('edit', track)"
-        @delete="$emit('delete', track)"
-        @upload="$emit('upload', track)"
-        @play-track="$emit('play', track.id)"
-      />
+      <TrackActionsButton :track="track" @edit="$emit('edit', track)" @delete="$emit('delete', track)"
+        @upload="$emit('upload', track)" @play-track="$emit('play', track.id)" />
     </div>
 
-    <TrackWaveForm
-      :slug="track.slug"
-      v-if="track.audioFile && playing"
-      class="track-item__waveform"
-      @reset="() => $emit('reset', track.id)"
-    />
+    <TrackWaveForm v-if="isActive && track.audioFile" class="track-item__waveform" :track-id="track.id"
+      :audio-file="audioFileUrl" @reset="() => $emit('reset', track.id)" />
+
   </div>
 </template>
 
@@ -56,12 +37,21 @@ const TrackWaveForm = defineAsyncComponent(
 )
 import TrackActionsButton from '@/features/tracks/components/TrackActionsButton.vue'
 import { DEFAULT_COVER_IMAGE } from '@/shared/constants.ts'
+import { useTrackAudioStore } from '@/features/audio/store/audioStore'
+import { getTrackAudioUrl } from '@/shared/services/api.ts'
 
 const props = defineProps<{
   track: Track
   selected: boolean
-  playing: boolean
 }>()
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+const audioStore = useTrackAudioStore()
+const { playingTrackId, isPlaying } = storeToRefs(audioStore)
+
+const isActive = computed(() => {
+  return isPlaying.value && playingTrackId.value === props.track.id
+})
 
 const emits = defineEmits<{
   (e: 'edit', track: Track): void
@@ -75,4 +65,8 @@ const emits = defineEmits<{
 function handleSelection() {
   emits('select', props.track.id)
 }
+const audioFileUrl = computed(() => {
+  if (!props.track.audioFile) return '/default-audio.mp3'
+  return getTrackAudioUrl(props.track.audioFile)
+})
 </script>

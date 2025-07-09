@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, computed } from 'vue'
-import { storeToRefs } from 'pinia'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { useAudioPlayer } from '@/features/audio/composables/useAudioPlayer'
-import { useTrackAudioStore } from '@/features/audio/store/audioStore'
 
-const props = defineProps<{ slug: string }>()
-const emit = defineEmits<{
-  (e: 'reset', trackId?: string): void
+const props = defineProps<{
+  trackId: string
+  audioFile: string
 }>()
 
+const emit = defineEmits<{
+  (e: 'reset', trackId: string): void
+}>()
+const audioFileRef = ref(props.audioFile)
+
+watch(() => props.audioFile, (newVal) => {
+  audioFileRef.value = newVal
+})
 const audioRef = ref<HTMLAudioElement | null>(null)
 const waveformRef = ref<HTMLDivElement | null>(null)
-
-const audioStore = useTrackAudioStore()
-const { fetchTrackBySlug } = audioStore
-const { trackBySlug } = storeToRefs(audioStore)
-const audioUrl = computed(() => trackBySlug.value?.audioFile ?? '')
 
 const {
   isPlaying,
@@ -26,84 +27,57 @@ const {
   play,
   pause,
   initWaveSurfer,
-} = useAudioPlayer(audioRef, waveformRef, audioUrl)
+} = useAudioPlayer(audioRef, waveformRef, audioFileRef)
 
-watch(audioUrl, (newUrl) => {
-  if (newUrl) {
-    nextTick().then(() => {
+onMounted(async () => {
+  await nextTick()
+
+  let attempts = 10
+  const tryInit = () => {
+    if (audioRef.value && waveformRef.value) {
       initWaveSurfer()
-    })
+    } else if (attempts-- > 0) {
+      setTimeout(tryInit, 100)
+    } else {
+      console.warn('WaveSurfer init failed: refs still not ready')
+    }
   }
+  tryInit()
 })
 
-const fetchData = async () => {
-  const result = await fetchTrackBySlug(props.slug)
-  if (result.isOk()) {
-    await nextTick()
-    initWaveSurfer()
-  }
-}
-
-watch(
-  () => props.slug,
-  () => {
-    if (props.slug) fetchData()
-  },
-  { immediate: true }
-)
-
 const removeAudioFile = () => {
-  emit('reset', trackBySlug.value?.id)
+  emit('reset', props.trackId)
   pause()
 }
 </script>
 <template>
-  <div
-    v-if="trackBySlug && trackBySlug.audioFile"
-    :data-testid="`audio-player-${trackBySlug.id}`"
-    class="audio-player"
-  >
-    <audio
-      ref="audioRef"
-      :src="trackBySlug.audioFile"
-      preload="auto"
-      @timeupdate="updateProgress"
-      @loadedmetadata="updateDuration"
-      class="audio-hidden"
-    >
+  <div v-if="audioFile" :data-testid="`audio-player-${trackId}`" class="audio-player">
+    <audio ref="audioRef" :src="audioFile" preload="auto" @timeupdate="updateProgress" @loadedmetadata="updateDuration"
+      class="audio-hidden">
       Your browser does not support the audio element.
     </audio>
 
-    <!-- Waveform -->
     <div ref="waveformRef" class="waveform"></div>
 
-    <!-- Controls -->
     <div class="controls">
-      <button
-        v-if="!isPlaying"
-        @click="play"
-        :data-testid="`play-button-${trackBySlug.id}`"
-        class="button play-button"
-      >
+      <button v-if="!isPlaying" @click="play" :data-testid="`play-button-${trackId}`" class="button play-button">
         Play
       </button>
-      <button
-        v-else
-        @click="pause"
-        class="button play-button"
-        :data-testid="`pause-button-${trackBySlug.id}`"
-      >
+      <button v-else @click="pause" class="button play-button" :data-testid="`pause-button-${trackId}`">
         Pause
       </button>
 
-      <span :data-testid="`audio-progress-${trackBySlug.id}`">
+      <span :data-testid="`audio-progress-${trackId}`">
         {{ currentTime }} / {{ duration }}
       </span>
-      <button type="button" @click="removeAudioFile" class="button danger">Remove File</button>
+      <button type="button" @click="removeAudioFile" class="button danger">
+        Remove File
+      </button>
     </div>
   </div>
 </template>
-<style>
+
+<style scoped>
 .track-item__waveform {
   margin-top: 1rem;
   border-top: 1px solid var(--color-glow-soft);
@@ -112,6 +86,7 @@ const removeAudioFile = () => {
 
 .audio-player {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 1rem;

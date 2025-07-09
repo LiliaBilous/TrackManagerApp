@@ -16,7 +16,7 @@ export function useSyncFiltersWithUrl() {
       artist: store.artist,
       genre: store.genre,
       sort: store.sort,
-      page: store.page,
+      page: Number(store.page),
     }),
     (newQuery) => {
       router.replace({ query: cleanQuery(newQuery) })
@@ -31,7 +31,7 @@ export function useSyncFiltersWithUrl() {
   watch(
     () => [store.search, store.artist],
     () => {
-      store.page = 1
+      store.page = store.page
       debouncedFetchTracks()
     }
   )

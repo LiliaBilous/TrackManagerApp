@@ -7,8 +7,9 @@ import { useTrackStore } from '@/features/tracks/stores/trackStore.ts'
 export const useTrackFileStore = defineStore('trackFileStore', () => {
   const trackStore = useTrackStore()
   function updateTrackInStore(updated: Track) {
-    const index = trackStore.tracks.findIndex((t) => t.id === updated.id)
-    if (index !== -1) trackStore.tracks.splice(index, 1, updated)
+    trackStore.tracks = trackStore.tracks.map((t) =>
+      t.id === updated.id ? updated : t
+    )
   }
 
   const uploadFile = async (trackId: string, file: File): Promise<Result<Track, Error>> => {

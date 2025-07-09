@@ -14,8 +14,8 @@
       </BaseButton>
 
       <BaseButton v-if="track.audioFile" class="track-item__button button button-upload"
-        :aria-label="`${isPlayerVisible ? 'Hide' : 'Show'} player for ${track.title}`" @click="handlePlay(track.id)">
-        {{ isPlayerVisible ? 'Hide player' : 'Player' }}
+        :aria-label="`${isActive ? 'Hide' : 'Show'} player for ${track.title}`" @click="emit('play-track', track.id)">
+        {{ isActive ? 'Hide player' : 'Player' }}
       </BaseButton>
 
       <BaseButton class="track-item__button button edit-button" :aria-label="`Edit metadata for ${track.title}`"
@@ -32,11 +32,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { Track } from '@/features/tracks/schema/trackSchema.ts'
 import BaseButton from '@/shared/components/ui/BaseButton.vue'
+import { useTrackAudioStore } from '@/features/audio/store/audioStore'
+const audioStore = useTrackAudioStore()
 
-defineProps<{ track: Track }>()
+const props = defineProps<{ track: Track }>()
 
 const emit = defineEmits<{
   (e: 'edit', track: Track): void
@@ -44,15 +46,11 @@ const emit = defineEmits<{
   (e: 'upload', track: Track): void
   (e: 'play-track', id: string): void
 }>()
-
-const isPlayerVisible = ref(false)
+const isActive = computed(
+  () => audioStore.isPlaying && audioStore.playingTrackId === props.track.id
+)
 const activeTrackId = ref<string | null>(null)
 const isDropdownOpen = ref(false)
-
-function handlePlay(trackId: string) {
-  isPlayerVisible.value = !isPlayerVisible.value
-  emit('play-track', trackId)
-}
 
 function toggleMenu(id: string) {
   if (activeTrackId.value === id && isDropdownOpen.value) {
@@ -64,5 +62,3 @@ function toggleMenu(id: string) {
   }
 }
 </script>
-
-<style></style>
