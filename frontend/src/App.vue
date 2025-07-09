@@ -15,7 +15,12 @@ const AsyncTracksView = defineAsyncComponent({
   <div class="wrapper">
     <section class="hero">
       <div class="hero__background">
-        <img src="/image.webp" aria-hidden="true" loading="eager" fetchpriority="high" />
+        <picture>
+          <source srcset="/image-mobile.webp" media="(max-width: 768px)" type="image/webp" />
+          <img src="/image-descktop.webp" alt="" aria-hidden="true" loading="eager" fetchpriority="high"
+            decoding="async" width="1920" height="1080" style="aspect-ratio: 16 / 9; object-fit: cover;" />
+        </picture>
+
       </div>
       <div class="hero__content">
         <ActiveTrack />
