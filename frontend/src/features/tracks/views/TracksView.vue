@@ -167,8 +167,3 @@ async function handleFileRemove(id: string) {
   }
 }
 </script>
-<style>
-.tracks-container {
-  min-height: 90vh;
-}
-</style>
