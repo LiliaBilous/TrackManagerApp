@@ -12,7 +12,7 @@
           Loading tracks...
           <div class="spinner" data-testid="loading-indicator" data-loading="true"></div>
         </div>
-        <TrackList v-if="!trackStore.isLoading" :tracks="trackStore.tracks" @edit="openEditModal"
+        <AsyncTrackList v-if="!trackStore.isLoading" :tracks="trackStore.tracks" @edit="openEditModal"
           @delete="openConfirmDelete" @upload="openUploadModal" @reset="handleFileRemove"
           @bulk-delete="deleteSelected" />
       </div>
@@ -31,11 +31,10 @@ import { useTrackFileStore } from '@/features/tracks/stores/useTrackFileStore.ts
 import { useTrackFilterStore } from '@/features/filters/store/trackFilterStore.ts'
 import { notifySuccess, notifyError } from '@/shared/services/toastService'
 import { useModal } from '@/shared/composables/useModal'
-
-import TrackList from '@/features/tracks/components/TrackList.vue'
 import PaginationControls from '@/shared/components/ui/PaginationControls.vue'
 import TrackToolbar from '@/features/filters/components/TrackToolbar.vue'
 
+const AsyncTrackList = defineAsyncComponent(() => import('@/features/tracks/components/TrackList.vue'))
 const CreateTrackModal = defineAsyncComponent(
   () => import('@/features/tracks/components/modals/CreateTrackModal.vue')
 )

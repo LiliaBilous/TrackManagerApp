@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
 import AppFooter from '@/shared/components/ui/AppFooter.vue'
 import ModalHost from '@/shared/components/modal/ModalHost.vue'
 import ActiveTrack from '@/shared/components/ActiveTrack.vue'
-const AsyncTracksView = defineAsyncComponent({
-  loader: () => import('@/features/tracks/views/TracksView.vue'),
-  delay: 0,
-  timeout: 10000,
-  suspensible: true,
+import TracksView from '@/features/tracks/views/TracksView.vue'
+import { ref, onMounted } from 'vue'
+const isMobile = ref(false)
+onMounted(() => {
+  isMobile.value = window.matchMedia('(max-width: 625px)').matches
 })
 </script>
 
@@ -15,11 +14,9 @@ const AsyncTracksView = defineAsyncComponent({
   <div class="wrapper">
     <section class="hero">
       <div class="hero__background">
-        <picture>
-          <source srcset="/image-mobile.webp" media="(max-width: 625px)" type="image/webp" />
-          <img src="/image-descktop.webp" alt="" aria-hidden="true" loading="eager" fetchpriority="high"
-            decoding="async" width="1920" height="1080" style="aspect-ratio: 16 / 9; object-fit: cover;" />
-        </picture>
+        <img :src="isMobile ? '/image-mobile.webp' : '/image-descktop.webp'" :width="isMobile ? 720 : 1920"
+          :height="isMobile ? 400 : 1080" fetchpriority="high" loading="eager" decoding="async" alt="hero img"
+          aria-hidden="true" style="aspect-ratio: 16 / 9; object-fit: cover; display: block" />
       </div>
       <div class="hero__content">
         <ActiveTrack />
@@ -30,7 +27,7 @@ const AsyncTracksView = defineAsyncComponent({
     </section>
     <Suspense>
       <template #default>
-        <AsyncTracksView />
+        <TracksView />
       </template>
       <template #fallback>
         <div class="async-tracks-placeholder">
