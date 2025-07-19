@@ -47,4 +47,4 @@ Accepted
 
 ---
 
-[⬅️ Previous](./ADR-0005-IntegrateESLint.md) | [🏠 Index(README)](../README.md) |
+[⬅️ Previous](./ADR-0004-TypeScriptMigration.md) | [🏠 Index(README)](../README.md) | [ Next ➡️ ](./ADR-0006-ZodSchemaParsing.md)
