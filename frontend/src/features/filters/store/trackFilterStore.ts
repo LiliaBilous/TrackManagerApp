@@ -27,7 +27,7 @@ export const useTrackFilterStore = defineStore('trackFilter', () => {
     sort.value = pipe(O.fromNullable(query.sort), O.getWithDefault<string>(''))
     page.value = pipe(
       O.fromNullable(query.page),
-      O.map((val) => typeof val === 'string' ? parseInt(val, 10) : val),
+      O.map((val) => (typeof val === 'string' ? parseInt(val, 10) : val)),
       O.getWithDefault<number>(1)
     )
   }

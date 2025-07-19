@@ -1,17 +1,29 @@
 <template>
   <div class="pagination">
-    <button data-testid="pagination-prev" @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
-      class="pagination-button">
+    <button
+      data-testid="pagination-prev"
+      @click="goToPage(currentPage - 1)"
+      :disabled="currentPage === 1"
+      class="pagination-button"
+    >
       &laquo;
     </button>
 
-    <button v-for="page in visiblePages" :key="page" @click="goToPage(page)"
-      :class="['pagination-page', { active: page === currentPage }]">
+    <button
+      v-for="page in visiblePages"
+      :key="page"
+      @click="goToPage(page)"
+      :class="['pagination-page', { active: page === currentPage }]"
+    >
       {{ page }}
     </button>
 
-    <button data-testid="pagination-next" @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
-      class="pagination-button">
+    <button
+      data-testid="pagination-next"
+      @click="goToPage(currentPage + 1)"
+      :disabled="currentPage === totalPages"
+      class="pagination-button"
+    >
       &raquo;
     </button>
   </div>

@@ -62,7 +62,6 @@ export function useAudioPlayer(
     waveSurfer.load(audioUrl.value)
   }
 
-
   onUnmounted(() => {
     waveSurfer?.destroy()
     waveSurfer = null

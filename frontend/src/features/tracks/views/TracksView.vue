@@ -2,10 +2,10 @@
   <main class="main">
     <div class="main__container">
       <TrackToolbar />
-      <button data-testid="create-track-button" class="main__create-track-button button" @click="openCreateModal"
+      <BaseButton data-testid="create-track-button" class="main__create-track-button button" @click="openCreateModal"
         :disabled="trackStore.isLoading" :aria-disabled="trackStore.isLoading" :data-loading="trackStore.isLoading">
         + Create Track
-      </button>
+      </BaseButton>
       <div class="tracks-container">
         <div v-if="trackStore.isLoading" data-testid="loading-tracks" data-loading="true"
           class="async-tracks-placeholder">
@@ -33,8 +33,11 @@ import { notifySuccess, notifyError } from '@/shared/services/toastService'
 import { useModal } from '@/shared/composables/useModal'
 import PaginationControls from '@/shared/components/ui/PaginationControls.vue'
 import TrackToolbar from '@/features/filters/components/TrackToolbar.vue'
+import BaseButton from '@/shared/components/ui/BaseButton.vue'
 
-const AsyncTrackList = defineAsyncComponent(() => import('@/features/tracks/components/TrackList.vue'))
+const AsyncTrackList = defineAsyncComponent(
+  () => import('@/features/tracks/components/TrackList.vue')
+)
 const CreateTrackModal = defineAsyncComponent(
   () => import('@/features/tracks/components/modals/CreateTrackModal.vue')
 )

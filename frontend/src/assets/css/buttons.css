@@ -1,0 +1,125 @@
+.button {
+  font-weight: 500;
+  border-radius: var(--border-radius-0-5);
+  color: var(--color-text-base);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-text-base);
+  transition: var(--transition);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  &:hover {
+    box-shadow: var(--box-shadow-button);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: var(--color-primary-purple);
+    color: var(--color-text-base);
+  }
+}
+
+button:focus-visible {
+  box-shadow: var(--box-shadow-button);
+  border: 1px solid var(--color-primary-cyan);
+  outline: none;
+}
+
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button-outline {
+  border: 1px solid transparent;
+  color: var(--color-text-base);
+  transition: var(--transition);
+}
+
+.button-danger {
+  background-color: var(--color-glow-soft);
+  color: var(--color-text-base);
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: transparent;
+    color: var(--color-primary-pink);
+    border: 1px solid var(--color-accent-glow);
+  }
+}
+
+.button-primary {
+  background-color: var(--color-primary-cyan);
+  color: var(--color-text-inverted);
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: transparent;
+    color: var(--color-primary-cyan);
+    border: 1px solid var(--color-primary-cyan);
+  }
+}
+
+.button-secondary {
+  border: 1px solid var(--color-primary-purple);
+  background: transparent;
+  color: var(--color-primary-purple);
+  transition: var(--transition);
+
+  &:hover {
+    background: var(--color-primary-purple);
+    color: var(--color-text-base);
+  }
+}
+
+.main__create-track-button {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  font-size: 1.25em;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0rem 1.5rem;
+  border-radius: var(--border-radius-0-5);
+  color: var(--color-text-base);
+  background: linear-gradient(260deg,
+      var(--color-primary-purple),
+      var(--color-primary-pink),
+      var(--color-primary-orange));
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  transition: background-position 0.5s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main__create-track-button:hover {
+  background-position: 100% 50%;
+}
+
+.button-upload:hover {
+  color: var(--color-primary-blue);
+  box-shadow: inset var(--box-shadow-blue);
+}
+
+.edit-button:hover {
+  color: var(--color-primary-purple);
+  box-shadow: inset var(--box-shadow-2);
+}
+
+.delete-button:hover {
+  color: var(--color-primary-pink);
+  box-shadow: inset var(--box-shadow-1);
+}

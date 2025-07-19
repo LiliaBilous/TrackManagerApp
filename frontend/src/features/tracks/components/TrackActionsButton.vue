@@ -2,29 +2,27 @@
   <div class="track-item__actions-wrapper">
     <BaseButton class="more-button" :aria-label="`Actions for ${track.title}`" aria-haspopup="menu"
       :aria-expanded="activeTrackId === track.id && isDropdownOpen" aria-controls="track-actions-dropdown"
-      @click="toggleMenu(track.id)">
+      @click="toggleMenu(track.id)" type="button">
       ⋮
     </BaseButton>
-
     <div class="track-item__actions" :class="{ dropdown: activeTrackId === track.id && isDropdownOpen }">
-      <BaseButton v-show="!track.audioFile" class="track-item__button button button-upload"
+      <BaseButton v-show="!track.audioFile" class="button button-outline button-upload"
         :aria-label="`Upload audio file for ${track.title}`" :data-testid="`upload-track-${track.id}`"
-        @click="$emit('upload', track)">
+        @click="$emit('upload', track)" type="button">
         Upload
       </BaseButton>
-
-      <BaseButton v-if="track.audioFile" class="track-item__button button button-upload"
-        :aria-label="`${isActive ? 'Hide' : 'Show'} player for ${track.title}`" @click="emit('play-track', track.id)">
+      <BaseButton v-if="track.audioFile" class="button button-outline button-upload"
+        :aria-label="`${isActive ? 'Hide' : 'Show'} player for ${track.title}`" @click="emit('play-track', track.id)"
+        type="button">
         {{ isActive ? 'Hide player' : 'Player' }}
       </BaseButton>
-
-      <BaseButton class="track-item__button button edit-button" :aria-label="`Edit metadata for ${track.title}`"
-        :data-testid="`edit-track-${track.id}`" @click="$emit('edit', track)">
+      <BaseButton class="button button-outline edit-button" :aria-label="`Edit metadata for ${track.title}`"
+        :data-testid="`edit-track-${track.id}`" @click="$emit('edit', track)" type="button">
         Edit
       </BaseButton>
 
-      <BaseButton class="track-item__button button delete-button" :aria-label="`Delete ${track.title}`"
-        :data-testid="`delete-track-${track.id}`" @click="$emit('delete', track)">
+      <BaseButton class="button button-outline delete-button" :aria-label="`Delete ${track.title}`"
+        :data-testid="`delete-track-${track.id}`" @click="$emit('delete', track)" type="button">
         Delete
       </BaseButton>
     </div>

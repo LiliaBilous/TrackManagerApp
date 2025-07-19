@@ -1,184 +1,146 @@
 .toolbar {
-    background: var(--color-bg-glass);
-    border: 1px solid var(--color-glow-soft);
-    border-radius: var(--border-radius-1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: var(--box-shadow-main);
-    color: var(--color-text-base);
-    transition: all 0.4s ease-in-out;
-    animation: fadeIn 0.4s ease-out;
-    padding: 1rem 0;
+  background: var(--color-bg-glass);
+  border: 1px solid var(--color-glow-soft);
+  border-radius: var(--border-radius-1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--box-shadow-main);
+  color: var(--color-text-base);
+  transition: all 0.4s ease-in-out;
+  animation: fadeIn 0.4s ease-out;
+  padding: 1rem 0;
 }
 
 .toolbar__container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    container-type: inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  container-type: inline-size;
 }
 
 .toolbar__header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .toolbar__body {
-    width: 100%;
-    flex-direction: column;
-    display: flex;
-    gap: 1rem;
-    animation: fadeIn 0.3s ease forwards;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  gap: 1rem;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .toolbar__item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-}
-
-.toolbar__button {
-    min-width: 5rem;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    border: 1px solid var(--color-primary-purple);
-    border-radius: var(--border-radius-0-5);
-    background: transparent;
-    color: var(--color-primary-purple);
-    transition: var(--transition);
-}
-
-.toolbar__button:hover {
-    background: var(--color-primary-purple);
-    color: var(--color-text-base);
-}
-
-.reset-button {
-    border: 1px solid var(--color-primary-pink);
-    color: var(--color-primary-pink);
-
-    &:hover {
-        background-color: var(--color-primary-pink);
-        color: var(--color-text-inverted);
-        box-shadow: var(--box-shadow-1);
-    }
-
-    &:focus,
-    &:focus-visible {
-        border-color: var(--color-primary-pink);
-        color: var(--color-text-base);
-    }
-}
-
-.reset-button:disabled {
-    /* opacity: 0.5; */
-    cursor: not-allowed;
-    box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .toolbar__search,
-.toolbar__filter-input,
-.toolbar__sort {
-    border-radius: var(--border-radius-0-5);
-    background-color: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--color-glow-soft);
-    color: var(--color-text-base);
-    transition: var(--transition);
+.toolbar__filter-input {
+  padding: 1rem;
+  width: 100%;
+  border: 1px solid var(--color-glow-soft);
+  border-radius: var(--border-radius-0-5);
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--color-text-base);
+  transition: var(--transition);
+  outline: none;
 }
 
 .toolbar__search:focus,
-.toolbar__filter-input:focus,
-.toolbar__sort:focus {
-    border-color: var(--color-primary-cyan);
-    box-shadow: var(--box-shadow-blue);
-    outline: none;
+.toolbar__filter-input:focus {
+  border-color: var(--color-primary-cyan);
+  box-shadow: var(--box-shadow-blue);
+  outline: none;
 }
 
-
 .filter-tabs {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    container-type: inline-size;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  container-type: inline-size;
 }
 
 .tab {
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--border-radius-1);
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid transparent;
-    text-transform: capitalize;
-    transition: var(--transition);
-    color: var(--color-text-base);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: var(--box-shadow-button);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-1);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-transform: capitalize;
+  transition: var(--transition);
+  color: var(--color-text-base);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: var(--box-shadow-button);
 }
 
 /* Стилі для genre */
 .tab.genre {
-    border-color: var(--color-primary-cyan);
-    color: var(--color-primary-cyan);
+  border-color: var(--color-primary-cyan);
+  color: var(--color-primary-cyan);
 }
 
 .tab.genre.active {
-    background-color: var(--color-primary-cyan);
-    color: var(--color-text-inverted);
-    box-shadow: var(--box-shadow-blue);
+  background-color: var(--color-primary-cyan);
+  color: var(--color-text-inverted);
+  box-shadow: var(--box-shadow-blue);
 }
 
 .tab.genre:focus-visible,
 .tab.genre:hover {
-    color: var(--color-text-base);
-    box-shadow: var(--box-shadow-blue);
+  color: var(--color-text-base);
+  box-shadow: var(--box-shadow-blue);
 }
 
 /* Стилі для sort */
 .tab.sort {
-    border-color: var(--color-primary-orange);
-    color: var(--color-primary-orange);
+  border-color: var(--color-primary-orange);
+  color: var(--color-primary-orange);
 }
 
 .tab.sort.active {
-    background-color: var(--color-primary-orange);
-    color: var(--color-text-inverted);
-    box-shadow: var(--box-shadow-1);
+  background-color: var(--color-primary-orange);
+  color: var(--color-text-inverted);
+  box-shadow: var(--box-shadow-1);
 }
 
 .tab.sort:hover,
 .tab.sort:focus,
 .tab.sort:focus-visible {
-    border-color: var(--color-primary-orange);
-    color: var(--color-text-base);
-    box-shadow: var(--box-shadow-1);
+  border-color: var(--color-primary-orange);
+  color: var(--color-text-base);
+  box-shadow: var(--box-shadow-1);
 }
 
 /* Container query: адаптація при вузькому контейнері */
 @container (max-width: 30rem) {
-    .tab {
-        padding: 0.3rem 0.6rem;
-    }
+  .tab {
+    padding: 0.3rem 0.6rem;
+  }
 
-    .filter-tabs {
-        gap: 0.25rem;
-    }
+  .filter-tabs {
+    gap: 0.25rem;
+  }
 
-    .toolbar__button {
-        padding: 0.5rem;
-    }
+  .toolbar__button {
+    padding: 0.5rem;
+  }
 
-    .toolbar__container {
-        gap: 1rem;
-    }
+  .toolbar__container {
+    gap: 1rem;
+  }
 
-    .toolbar {
-        padding: 0.5rem 0;
-    }
+  .toolbar {
+    padding: 0.5rem 0;
+  }
 }

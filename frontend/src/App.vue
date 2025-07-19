@@ -14,9 +14,17 @@ onMounted(() => {
   <div class="wrapper">
     <section class="hero">
       <div class="hero__background">
-        <img :src="isMobile ? '/image-mobile.webp' : '/image-descktop.webp'" :width="isMobile ? 720 : 1920"
-          :height="isMobile ? 400 : 1080" fetchpriority="high" loading="eager" decoding="async" alt="hero img"
-          aria-hidden="true" style="aspect-ratio: 16 / 9; object-fit: cover; display: block" />
+        <img
+          :src="isMobile ? '/image-mobile.webp' : '/image-descktop.webp'"
+          :width="isMobile ? 720 : 1920"
+          :height="isMobile ? 400 : 1080"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+          alt="hero img"
+          aria-hidden="true"
+          style="aspect-ratio: 16 / 9; object-fit: cover; display: block"
+        />
       </div>
       <div class="hero__content">
         <ActiveTrack />

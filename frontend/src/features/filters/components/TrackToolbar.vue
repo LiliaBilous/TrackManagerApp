@@ -2,22 +2,21 @@
   <header class="toolbar">
     <div class="toolbar__container">
       <div class="toolbar__header">
-        <button class="toolbar__button button" @click="dropdownOpen = !dropdownOpen" :aria-expanded="dropdownOpen"
-          aria-controls="filters-section" aria-label="Toggle filters">
+        <BaseButton class="button button-secondary" :aria-expanded="dropdownOpen" aria-controls="filters-section"
+          aria-label="Toggle filters" @click="dropdownOpen = !dropdownOpen">
           {{ dropdownOpen ? 'Hide Filters' : 'Show Filters' }}
           <span>{{ dropdownOpen ? '▲' : '▼' }}</span>
-        </button>
-
-        <button class="toolbar__button reset-button button" @click="resetAllFilters" :disabled="!isFilterActive"
+        </BaseButton>
+        <BaseButton class="button button-danger" :disabled="!isFilterActive" @click="resetAllFilters"
           aria-label="Reset all filters">
           Reset Filters <span>&times;</span>
-        </button>
+        </BaseButton>
       </div>
 
       <div class="toolbar__body" v-if="dropdownOpen" id="filters-section" aria-label="Filter options">
         <div class="toolbar__item">
           <label for="search-input" class="visually-hidden">Search tracks</label>
-          <input id="search-input" class="toolbar__search input" data-testid="search-input" type="text"
+          <input id="search-input" class="toolbar__search" data-testid="search-input" type="text"
             v-model="filterStore.search" placeholder="Search..." aria-label="Search tracks by title or metadata" />
         </div>
         <div class="toolbar__item">
@@ -27,7 +26,7 @@
         </div>
         <div class="toolbar__item">
           <label for="filter-artist" class="">Filter by Artist</label>
-          <input id="filter-artist" class="toolbar__filter-input input" data-testid="filter-artist" type="text"
+          <input id="filter-artist" class="toolbar__filter-input" data-testid="filter-artist" type="text"
             v-model="filterStore.artist" placeholder="Filter by Artist" aria-label="Filter tracks by artist" />
         </div>
         <div class="toolbar__item">
@@ -44,7 +43,7 @@
 import { useRoute } from 'vue-router'
 import { ref, computed, onMounted } from 'vue'
 import { useTrackFilterStore } from '@/features/filters/store/trackFilterStore.ts'
-
+import BaseButton from '@/shared/components/ui/BaseButton.vue'
 import { useSyncFiltersWithUrl } from '@/features/filters/composables/useFiltersWithUrl'
 import FilterTabGroup from '@/features/filters/components/FilterTabGroup.vue'
 import { useGenreQuery } from '@/shared/composables/useGenreQuery.ts'

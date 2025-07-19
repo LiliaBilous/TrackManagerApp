@@ -7,7 +7,7 @@ import {
   updateTrack,
   deleteTrack,
   bulkDeleteTracks,
-} from '@/shared/services/graphql/qraphql'
+} from '@/shared/services/graphql/graphql'
 // import {
 //   getTracks,
 //   createTrack,

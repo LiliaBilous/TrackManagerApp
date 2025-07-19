@@ -33,16 +33,13 @@
         <div v-if="audioFileUrl" class="audio-player">
           <div class="file-info">
             <p class="file-name" v-if="audioFile">{{ audioFile.name }}</p>
-            <button
-              type="button"
-              @click="removeAudioFile"
-              class="button danger"
+            <BaseButton
+              :buttonClass="'button button-danger'"
               aria-label="Remove uploaded audio file"
+              @click="removeAudioFile"
+              >Remove File</BaseButton
             >
-              Remove File
-            </button>
           </div>
-
           <audio
             :src="audioFileUrl"
             :key="audioFileUrl"
@@ -54,23 +51,22 @@
       </form>
     </template>
     <template #footer>
-      <div class="button-row">
-        <button
-          type="button"
-          @click="$emit('close')"
-          class="button button-cancel"
+      <div class="modal-actions">
+        <BaseButton
+          :buttonClass="'button button-danger'"
+          aria-label="Cancel upload"
           data-testid="cancel-button"
+          @click="$emit('close')"
+          >Cancel</BaseButton
         >
-          Cancel
-        </button>
-        <button
+        <BaseButton
+          :buttonClass="'button button-primary'"
+          aria-label="Upload file to track"
+          data-testid="submit-button"
           type="submit"
           form="upload-file"
-          class="button button-submit"
-          data-testid="submit-button"
+          >Save</BaseButton
         >
-          Save
-        </button>
       </div>
     </template>
   </BaseModal>
@@ -81,6 +77,7 @@ import { ref } from 'vue'
 import { validateAudioFile } from '@/features/audio/utils/audioFileValidation'
 import type { Track } from '@/features/tracks/schema/trackSchema.ts'
 import BaseModal from '@/shared/components/modal/BaseModal.vue'
+import BaseButton from '@/shared/components/ui/BaseButton.vue'
 
 const props = defineProps<{ track: Track }>()
 const emit = defineEmits<{

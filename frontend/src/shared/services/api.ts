@@ -4,7 +4,8 @@ import type { Track } from '@/features/tracks/schema/trackSchema.ts'
 import type { TrackQuery, PaginatedTracks } from '@/features/filters/schema/trackQuerySchema.ts'
 import { API_BASE } from '@/shared/constants.ts'
 
-export const getTrackAudioUrl = (filename: string): string => `http://localhost:8000/api/files/${filename}`
+export const getTrackAudioUrl = (filename: string): string =>
+  `http://localhost:8000/api/files/${filename}`
 
 export const uploadTrackFile = (id: string, formData: FormData): Promise<Result<Track, Error>> =>
   fetchWrapper<Track>(`http://localhost:8000/api/tracks/${id}/upload`, {

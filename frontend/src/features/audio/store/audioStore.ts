@@ -2,7 +2,6 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useTrackAudioStore = defineStore('trackAudioStore', () => {
-
   const playingTrackId = ref<string | null>(null)
   const isPlaying = ref(false)
 
@@ -17,6 +16,6 @@ export const useTrackAudioStore = defineStore('trackAudioStore', () => {
   return {
     playingTrackId,
     isPlaying,
-    togglePlay
+    togglePlay,
   }
 })

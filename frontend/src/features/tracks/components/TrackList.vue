@@ -1,13 +1,28 @@
 <template>
   <div>
     <Transition name="fade">
-      <TrackBulkActions v-if="selectedIds.length" :selected-ids="selectedIds" :select-all="selectAll"
-        @update:selectAll="toggleSelectAll" @delete-selected="deleteSelected" />
+      <TrackBulkActions
+        v-if="selectedIds.length"
+        :selected-ids="selectedIds"
+        :select-all="selectAll"
+        @update:selectAll="toggleSelectAll"
+        @delete-selected="deleteSelected"
+      />
     </Transition>
     <TransitionGroup class="track-list" name="list" tag="div" v-if="tracks.length > 0">
-      <TrackCard v-for="track in tracks" :key="track.id" :track="track" :selected="selectedIds.includes(track.id)"
-        :disable-actions="selectedIds.length > 0" @edit="emits('edit', track)" @delete="emits('delete', track)"
-        @upload="emits('upload', track)" @play="handlePlay" @reset="handleReset" @select="handleSelect" />
+      <TrackCard
+        v-for="track in tracks"
+        :key="track.id"
+        :track="track"
+        :selected="selectedIds.includes(track.id)"
+        :disable-actions="selectedIds.length > 0"
+        @edit="emits('edit', track)"
+        @delete="emits('delete', track)"
+        @upload="emits('upload', track)"
+        @play="handlePlay"
+        @reset="handleReset"
+        @select="handleSelect"
+      />
     </TransitionGroup>
     <div v-else>
       <p>No tracks found.</p>

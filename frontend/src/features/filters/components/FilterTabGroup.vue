@@ -1,8 +1,13 @@
 <template>
   <div class="filter-tabs" role="group" :aria-label="ariaLabel">
-    <button v-for="option in options" :key="option" :class="['tab', variant, { active: modelValue === option }]"
+    <button
+      v-for="option in options"
+      :key="option"
+      :class="['tab', variant, { active: modelValue === option }]"
       :aria-pressed="modelValue === option"
-      :aria-label="modelValue === option ? `Unselect ${option}` : `Select ${option}`" @click="toggleOption(option)">
+      :aria-label="modelValue === option ? `Unselect ${option}` : `Select ${option}`"
+      @click="toggleOption(option)"
+    >
       {{ option }}
     </button>
   </div>

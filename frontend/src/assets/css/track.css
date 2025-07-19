@@ -8,18 +8,16 @@
 
 .track-list__track-item {
   position: relative;
-  display: flex;
-  flex-direction: column;
   padding: 1.5rem;
   border-radius: var(--border-radius-1);
   background: var(--color-bg-glass);
   border: 1px solid var(--color-glow-soft);
-  box-shadow: var(--box-shadow-button);
+  box-shadow: var(--box-shadow-main);
   transition: var(--transition);
 }
 
 .track-list__track-item:hover {
-  /* transform: translateY(-2px); */
+  box-shadow: var(--box-shadow-button);
 }
 
 .track-item__card {
@@ -61,7 +59,7 @@
   margin-top: 0.2rem;
 }
 
-.track-list>div>p {
+.track-list > div > p {
   text-align: center;
   color: var(--color-text-muted);
   font-size: 1rem;
@@ -152,32 +150,4 @@
     z-index: 1000;
     min-width: 10rem;
   }
-}
-
-.track-item__button {
-  font-weight: 500;
-  border: 1px solid transparent;
-  border-radius: var(--border-radius-0-5);
-  padding: 0.5rem 0.75rem;
-  color: var(--color-text-base);
-  transition: var(--transition);
-}
-
-.track-item__button:focus-visible {
-  box-shadow: var(--box-shadow-button);
-}
-
-.button-upload:hover {
-  color: var(--color-primary-blue);
-  box-shadow: inset var(--box-shadow-blue);
-}
-
-.edit-button:hover {
-  color: var(--color-primary-purple);
-  box-shadow: inset var(--box-shadow-2);
-}
-
-.delete-button:hover {
-  color: var(--color-primary-pink);
-  box-shadow: inset var(--box-shadow-1);
 }

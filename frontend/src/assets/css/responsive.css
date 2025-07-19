@@ -13,6 +13,8 @@
   }
 }
 
-@container (max-width: 40rem) {}
+@container (max-width: 40rem) {
+}
 
-@container (max-width: 50rem) {}
+@container (max-width: 50rem) {
+}
