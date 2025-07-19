@@ -48,7 +48,8 @@
     "src/**/*.d.ts",
     "src/**/*.vue",
     "tests/e2e/**/*.ts",
-    "tests/component/**/*.ts"
+    "tests/component/**/*.ts",
+    "stories"
   ],
   "exclude": ["node_modules", "dist", "tests"]
 }
