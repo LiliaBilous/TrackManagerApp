@@ -5,16 +5,16 @@ import type { TrackQuery, PaginatedTracks } from '@/features/filters/schema/trac
 import { API_BASE } from '@/shared/constants.ts'
 
 export const getTrackAudioUrl = (filename: string): string =>
-  `http://localhost:8000/api/files/${filename}`
+  `${import.meta.env.VITE_REST_API_URL}/files/${filename}`
 
 export const uploadTrackFile = (id: string, formData: FormData): Promise<Result<Track, Error>> =>
-  fetchWrapper<Track>(`http://localhost:8000/api/tracks/${id}/upload`, {
+  fetchWrapper<Track>(`${import.meta.env.VITE_REST_API_URL}/tracks/${id}/upload`, {
     method: 'POST',
     body: formData,
   })
 
 export const deleteTrackFile = (id: string): Promise<Result<Track, Error>> =>
-  fetchWrapper<Track>(`http://localhost:8000/api/tracks/${id}/file`, {
+  fetchWrapper<Track>(`${import.meta.env.VITE_REST_API_URL}/tracks/${id}/file`, {
     method: 'DELETE',
   })
 
