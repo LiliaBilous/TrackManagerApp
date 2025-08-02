@@ -5,8 +5,9 @@ import { getMainDefinition } from '@apollo/client/utilities'
 
 // HTTP link for queries & mutations
 const httpLink = createHttpLink({
-  uri: 'import.meta.env.VITE_API_URL/graphql',
+  uri: `${import.meta.env.VITE_API_URL}/graphql`,
 })
+
 
 // WebSocket link for subscriptions
 const wsLink = new GraphQLWsLink(
