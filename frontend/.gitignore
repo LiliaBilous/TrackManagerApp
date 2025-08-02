@@ -24,6 +24,8 @@ tsconfig.tsbuildinfo
 *.sw?
 .env
 .env.*.local
+.env.development
+.env.production
 
 # Playwright
 /test-results/
