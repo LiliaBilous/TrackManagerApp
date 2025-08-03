@@ -1,7 +1,7 @@
 <template>
   <label class="checkbox">
-    <input type="checkbox" class="checkbox__input" :checked="checked" @change="handleChange" :id="id"
-      :data-testid="dataTestid" :aria-label="ariaLabel" />
+    <input type="checkbox" class="checkbox__input" :checked="props.checked" @change="handleChange" :id="props.id"
+      :data-testid="props.dataTestid" :aria-label="props.ariaLabel" />
     <span class="checkbox__box">
       <svg v-if="checked" class="checkbox__check" viewBox="0 0 24 24">
         <path fill="currentColor" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   checked: boolean
   id?: string
   dataTestid?: string

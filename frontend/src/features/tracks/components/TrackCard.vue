@@ -2,20 +2,9 @@
   <div class="track-list__track-item" :data-testid="`track-item-${track.id}`">
     <div class="track-item__card">
       <div class="track-item__content">
-        <BaseCheckbox
-          :checked="selected"
-          :data-testid="`track-checkbox-${track.id}`"
-          :aria-label="`Select track ${track.title}`"
-          :id="`${track.id}`"
-          @change="handleSelection"
-        />
-
-        <img
-          loading="lazy"
-          :src="track.coverImage || DEFAULT_COVER_IMAGE"
-          alt="cover"
-          class="track-item__image"
-        />
+        <BaseCheckbox :checked="selected" :dataTestid="`track-checkbox-${track.id}`"
+          :aria-label="`Select track ${track.title}`" :id="`${track.id}`" @change="handleSelection" />
+        <img loading="lazy" :src="track.coverImage || DEFAULT_COVER_IMAGE" alt="cover" class="track-item__image" />
         <div>
           <h2 :data-testid="`track-item-${track.id}-title`" class="track-item__title">
             {{ track.title }}
@@ -27,22 +16,12 @@
         </div>
       </div>
 
-      <TrackActionsButton
-        :track="track"
-        @edit="$emit('edit', track)"
-        @delete="$emit('delete', track)"
-        @upload="$emit('upload', track)"
-        @play-track="$emit('play', track.id)"
-      />
+      <TrackActionsButton :track="track" @edit="$emit('edit', track)" @delete="$emit('delete', track)"
+        @upload="$emit('upload', track)" @play-track="$emit('play', track.id)" />
     </div>
 
-    <TrackWaveForm
-      v-if="isActive && track.audioFile"
-      class="track-item__waveform"
-      :track-id="track.id"
-      :audio-file="audioFileUrl"
-      @reset="() => $emit('reset', track.id)"
-    />
+    <TrackWaveForm v-if="isActive && track.audioFile" class="track-item__waveform" :track-id="track.id"
+      :audio-file="audioFileUrl" @reset="() => $emit('reset', track.id)" />
   </div>
 </template>
 
