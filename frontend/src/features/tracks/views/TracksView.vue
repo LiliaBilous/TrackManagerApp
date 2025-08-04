@@ -124,7 +124,6 @@ async function addNewTrack(newTrack: Track) {
 
   if (result.isOk()) {
     notifySuccess('New track added')
-    // Скидаємо виділення після додавання
     selectAll.value = false
     selectedIds.value = []
   } else {
@@ -143,7 +142,6 @@ async function deleteSingleTrack(id: string) {
   const result = await trackStore.removeTrack(id)
   if (result.isOk()) {
     notifySuccess('Track deleted successfully')
-    // Скидаємо виділення після видалення
     selectAll.value = false
     selectedIds.value = []
   } else {
@@ -154,7 +152,6 @@ async function deleteSelected(ids: string[]) {
   const result = await trackStore.removeTracks(ids)
   if (result.isOk()) {
     notifySuccess('Selected tracks deleted')
-    // Скидаємо виділення після масового видалення
     selectAll.value = false
     selectedIds.value = []
   } else {

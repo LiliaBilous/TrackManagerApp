@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { Result, ok } from 'neverthrow'
+import { Result } from 'neverthrow'
+
 import {
   getTracks,
   createTrack,
@@ -14,10 +15,11 @@ import { useTrackFilterStore } from '@/features/filters/store/trackFilterStore'
 
 export const useTrackStore = defineStore('trackStore', () => {
   const tracks = ref<Track[]>([])
-  const total = ref<number>(0)
-  const limit = ref<number>(10)
-  const totalPages = ref<number>(0)
+  const total = ref(0)
+  const totalPages = ref(0)
+  const limit = ref(10)
   const isLoading = ref(false)
+
   const filterStore = useTrackFilterStore()
 
   const fetchTracks = async (): Promise<void> => {
@@ -38,29 +40,36 @@ export const useTrackStore = defineStore('trackStore', () => {
         await fetchTracks()
       }
     }
+
     isLoading.value = false
   }
 
   const addTrack = async (newTrack: Omit<Track, 'id'>): Promise<Result<Track, Error>> => {
     const result = await createTrack(newTrack)
-
     if (result.isOk()) {
-      if (filterStore.page === 1 && tracks.value.length >= limit.value) {
-        tracks.value = [result.value, ...tracks.value.slice(0, -1)]
-      } else if (filterStore.page === 1) {
-        tracks.value = [result.value, ...tracks.value]
-      }
       total.value++
+      if (filterStore.page === 1) {
+        tracks.value = [result.value, ...tracks.value]
+        if (tracks.value.length > limit.value) {
+          // Зміщуємо останній трек на наступну сторінку (видаляємо з масиву поточної сторінки, але не з бази)
+          tracks.value = tracks.value.slice(0, limit.value)
+        }
+      }
       totalPages.value = Math.ceil(total.value / limit.value)
     }
     return result
   }
 
+
   const editTrack = async (updatedTrack: Track): Promise<Result<Track, Error>> => {
     const result = await updateTrack(updatedTrack.id, updatedTrack)
+
     if (result.isOk()) {
-      tracks.value = tracks.value.map((t) => (t.id === updatedTrack.id ? result.value : t))
+      tracks.value = tracks.value.map((t) =>
+        t.id === updatedTrack.id ? result.value : t
+      )
     }
+
     return result
   }
 
@@ -69,91 +78,58 @@ export const useTrackStore = defineStore('trackStore', () => {
     if (result.isOk()) {
       tracks.value = tracks.value.filter((t) => t.id !== id)
       total.value--
-      totalPages.value = Math.ceil(total.value / limit.value)
 
-      if (filterStore.page > totalPages.value && totalPages.value > 0) {
-        filterStore.page = totalPages.value
-        await fetchTracks()
-        return result
-      }
+      const currentPage = filterStore.page
+      const itemsLeftOnPage = tracks.value.length
 
-      if (tracks.value.length < limit.value && filterStore.page < totalPages.value) {
-        const nextPageQuery = { ...filterStore.toQuery(), page: filterStore.page + 1 }
-        const nextPageResult = await getTracks(nextPageQuery)
+      if (itemsLeftOnPage < limit.value) {
+        const nextPage = currentPage + 1
+        const query = { ...filterStore.toQuery(), page: nextPage }
+        const fetchResult = await getTracks(query)
 
-        if (nextPageResult.isOk()) {
-          const neededCount = limit.value - tracks.value.length
-          const additionalTracks = nextPageResult.value.data.slice(0, neededCount)
-          tracks.value = [...tracks.value, ...additionalTracks]
+        if (fetchResult.isOk()) {
+          const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
+          tracks.value.push(...moreTracks)
         }
-      }
-
-      const isPageEmpty = tracks.value.length === 0 && filterStore.page > 1
-      if (isPageEmpty) {
-        filterStore.page--
-        await fetchTracks()
       }
     }
     return result
   }
 
+
   const removeTracks = async (ids: string[]): Promise<Result<BatchDeleteResponse, Error>> => {
-    const previousTracks = [...tracks.value]
-    const previousTotal = total.value
-    const previousTotalPages = totalPages.value
-
-    tracks.value = tracks.value.filter((t) => !ids.includes(t.id))
-    total.value -= ids.length
-
-    totalPages.value = Math.ceil(total.value / limit.value)
-
-    if (filterStore.page > totalPages.value && totalPages.value > 0) {
-      filterStore.page = totalPages.value
-    }
-
-    if (tracks.value.length < limit.value && filterStore.page < totalPages.value) {
-      const nextPageQuery = { ...filterStore.toQuery(), page: filterStore.page + 1 }
-      const nextPageResult = await getTracks(nextPageQuery)
-
-      if (nextPageResult.isOk()) {
-        const neededCount = limit.value - tracks.value.length
-        const additionalTracks = nextPageResult.value.data.slice(0, neededCount)
-        tracks.value = [...tracks.value, ...additionalTracks]
-      }
-    }
-
-    const shouldDecrementPage = tracks.value.length === 0 && filterStore.page > 1
-    if (shouldDecrementPage) {
-      filterStore.page--
-    }
-
     const result = await bulkDeleteTracks(ids)
+    if (result.isOk()) {
+      tracks.value = tracks.value.filter((t) => !ids.includes(t.id))
+      total.value -= ids.length
 
-    if (result.isErr()) {
-      tracks.value = previousTracks
-      total.value = previousTotal
-      totalPages.value = previousTotalPages
-      if (shouldDecrementPage) {
-        filterStore.page++
+      const itemsLeftOnPage = tracks.value.length
+
+      if (itemsLeftOnPage < limit.value) {
+        const nextPage = filterStore.page + 1
+        const query = { ...filterStore.toQuery(), page: nextPage }
+        const fetchResult = await getTracks(query)
+
+        if (fetchResult.isOk()) {
+          const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
+          tracks.value.push(...moreTracks)
+        }
       }
-      return result
     }
-
-    if (shouldDecrementPage) {
-      await fetchTracks()
-    }
-
-    return ok(result.value)
+    return result
   }
+
 
   return {
     tracks,
+    total,
     totalPages,
+    limit,
     isLoading,
     fetchTracks,
     addTrack,
+    editTrack,
     removeTrack,
     removeTracks,
-    editTrack,
   }
 })
