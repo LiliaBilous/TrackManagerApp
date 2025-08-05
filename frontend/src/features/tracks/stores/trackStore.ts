@@ -9,6 +9,7 @@ import {
   deleteTrack,
   bulkDeleteTracks,
 } from '@/shared/services/graphql/graphql'
+import { apolloClient } from '@/shared/services/graphql/apollo'
 
 import type { Track, BatchDeleteResponse } from '@/features/tracks/schema/trackSchema.ts'
 import { useTrackFilterStore } from '@/features/filters/store/trackFilterStore'
@@ -24,6 +25,9 @@ export const useTrackStore = defineStore('trackStore', () => {
 
   const fetchTracks = async (): Promise<void> => {
     isLoading.value = true
+
+    await apolloClient.clearStore()
+
     const query = filterStore.toQuery()
 
     const result = await getTracks(query)
@@ -51,7 +55,6 @@ export const useTrackStore = defineStore('trackStore', () => {
       if (filterStore.page === 1) {
         tracks.value = [result.value, ...tracks.value]
         if (tracks.value.length > limit.value) {
-          // Зміщуємо останній трек на наступну сторінку (видаляємо з масиву поточної сторінки, але не з бази)
           tracks.value = tracks.value.slice(0, limit.value)
         }
       }
@@ -69,28 +72,30 @@ export const useTrackStore = defineStore('trackStore', () => {
         t.id === updatedTrack.id ? result.value : t
       )
     }
-
     return result
   }
 
   const removeTrack = async (id: string): Promise<Result<boolean, Error>> => {
     const result = await deleteTrack(id)
     if (result.isOk()) {
-      tracks.value = tracks.value.filter((t) => t.id !== id)
-      total.value--
+      if (result.value) {
+        tracks.value = tracks.value.filter((t) => t.id !== id)
+        total.value--
 
-      const currentPage = filterStore.page
-      const itemsLeftOnPage = tracks.value.length
+        const itemsLeftOnPage = tracks.value.length
 
-      if (itemsLeftOnPage < limit.value) {
-        const nextPage = currentPage + 1
-        const query = { ...filterStore.toQuery(), page: nextPage }
-        const fetchResult = await getTracks(query)
+        if (itemsLeftOnPage < limit.value && total.value > itemsLeftOnPage) {
+          const nextPage = filterStore.page + 1
+          const query = { ...filterStore.toQuery(), page: nextPage }
+          const fetchResult = await getTracks(query)
 
-        if (fetchResult.isOk()) {
-          const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
-          tracks.value.push(...moreTracks)
+          if (fetchResult.isOk()) {
+            const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
+            tracks.value.push(...moreTracks)
+          }
         }
+
+        totalPages.value = Math.ceil(total.value / limit.value)
       }
     }
     return result
@@ -100,20 +105,26 @@ export const useTrackStore = defineStore('trackStore', () => {
   const removeTracks = async (ids: string[]): Promise<Result<BatchDeleteResponse, Error>> => {
     const result = await bulkDeleteTracks(ids)
     if (result.isOk()) {
-      tracks.value = tracks.value.filter((t) => !ids.includes(t.id))
-      total.value -= ids.length
+      const { success } = result.value
 
-      const itemsLeftOnPage = tracks.value.length
+      if (success.length > 0) {
+        tracks.value = tracks.value.filter((t) => !success.includes(t.id))
+        total.value -= success.length
 
-      if (itemsLeftOnPage < limit.value) {
-        const nextPage = filterStore.page + 1
-        const query = { ...filterStore.toQuery(), page: nextPage }
-        const fetchResult = await getTracks(query)
+        const itemsLeftOnPage = tracks.value.length
 
-        if (fetchResult.isOk()) {
-          const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
-          tracks.value.push(...moreTracks)
+        if (itemsLeftOnPage < limit.value && total.value > itemsLeftOnPage) {
+          const nextPage = filterStore.page + 1
+          const query = { ...filterStore.toQuery(), page: nextPage }
+          const fetchResult = await getTracks(query)
+
+          if (fetchResult.isOk()) {
+            const moreTracks = fetchResult.value.data.slice(0, limit.value - itemsLeftOnPage)
+            tracks.value.push(...moreTracks)
+          }
         }
+
+        totalPages.value = Math.ceil(total.value / limit.value)
       }
     }
     return result

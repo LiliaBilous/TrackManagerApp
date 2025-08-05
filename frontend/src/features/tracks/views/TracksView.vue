@@ -141,9 +141,13 @@ async function handleTrackEdit(updatedTrack: Track) {
 async function deleteSingleTrack(id: string) {
   const result = await trackStore.removeTrack(id)
   if (result.isOk()) {
-    notifySuccess('Track deleted successfully')
-    selectAll.value = false
-    selectedIds.value = []
+    if (result.value) {
+      notifySuccess('Track deleted successfully')
+      selectAll.value = false
+      selectedIds.value = []
+    } else {
+      notifyError('Track was not deleted')
+    }
   } else {
     notifyError(`Failed to delete track: ${result.error.message}`)
   }
@@ -151,11 +155,23 @@ async function deleteSingleTrack(id: string) {
 async function deleteSelected(ids: string[]) {
   const result = await trackStore.removeTracks(ids)
   if (result.isOk()) {
-    notifySuccess('Selected tracks deleted')
+    const { success, failed } = result.value
+
+    if (success.length > 0 && failed.length === 0) {
+      notifySuccess(`Successfully deleted ${success.length} track(s)`)
+    } else if (success.length > 0 && failed.length > 0) {
+      notifySuccess(`Successfully deleted ${success.length} track(s)`)
+      notifyError(`Failed to delete ${failed.length} track(s)`)
+    } else if (success.length === 0 && failed.length > 0) {
+      notifyError(`Failed to delete ${failed.length} track(s)`)
+    } else {
+      notifyError('No tracks were deleted')
+    }
+
     selectAll.value = false
     selectedIds.value = []
   } else {
-    notifyError('Failed to delete selected tracks')
+    notifyError(`Failed to delete selected tracks: ${result.error.message}`)
   }
 }
 async function handleFileUpload(id: string, file: File) {
