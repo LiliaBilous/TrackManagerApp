@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
@@ -8,15 +9,15 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    visualizer({
-      open: true,
-      filename: 'bundle-report.html',
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ],
+  plugins: [vue(), visualizer({
+    open: true,
+    filename: 'bundle-report.html',
+    gzipSize: true,
+    brotliSize: true,
+  }), sentryVitePlugin({
+    org: "lilias-projects",
+    project: "musictrackmanager"
+  })],
 
   server: {
     port: 3000,

@@ -2,6 +2,7 @@ import { createApp, h, provide } from 'vue'
 import { apolloClient } from '@/shared/services/graphql/apollo'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { createPinia } from 'pinia'
+import * as Sentry from "@sentry/vue";
 import App from './App.vue'
 import router from '@/router/index.ts'
 import Toast from 'vue-toastification'
@@ -34,7 +35,12 @@ app.use(Toast, {
   icon: true,
   container: toastContainer,
 })
-
+Sentry.init({
+  app,
+  dsn: "https://e75fe94935dfa10929ce7b39090132ab@o4509730787557376.ingest.de.sentry.io/4509790392025168",
+  sendDefaultPii: true
+});
+myUndefinedFunction();
 app.use(pinia)
 app.use(router)
 
