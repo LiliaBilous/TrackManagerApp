@@ -14,10 +14,12 @@ onMounted(() => {
   <div class="wrapper">
     <section class="hero">
       <div class="hero__background">
-        <img src="/image-desktop.webp" srcset="/image-mobile.webp 720w, /image-desktop.webp 1400w"
-          sizes="(max-width: 768px) 100vw, 1400px" width="1400" height="800" fetchpriority="high" loading="eager"
-          decoding="async" alt="Colorful audio waveform hero background" />
-
+        <picture>
+          <source srcset="/image-desktop.avif 1400w, /image-mobile.avif 720w" type="image/avif">
+          <source srcset="/image-desktop.webp 1400w, /image-mobile.webp 720w" type="image/webp">
+          <img src="/image-desktop.avif" width="1400" height="800" fetchpriority="high" loading="eager" decoding="async"
+            alt="Colorful audio waveform hero background">
+        </picture>
       </div>
       <div class="hero__content">
         <ActiveTrack />
