@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { Result } from 'neverthrow'
+import { apolloClient } from '@/shared/services/graphql/apollo'
 
 import {
   getTracks,
@@ -9,7 +10,7 @@ import {
   deleteTrack,
   bulkDeleteTracks,
 } from '@/shared/services/graphql/graphql'
-import { apolloClient } from '@/shared/services/graphql/apollo'
+
 
 import type { Track, BatchDeleteResponse } from '@/features/tracks/schema/trackSchema.ts'
 import { useTrackFilterStore } from '@/features/filters/store/trackFilterStore'
@@ -26,7 +27,9 @@ export const useTrackStore = defineStore('trackStore', () => {
   const fetchTracks = async (): Promise<void> => {
     isLoading.value = true
 
-    await apolloClient.clearStore()
+    // Очищаємо тільки кеш для треків, залишаючи жанри
+    await apolloClient.cache.evict({ fieldName: 'tracks' })
+    await apolloClient.cache.gc()
 
     const query = filterStore.toQuery()
 

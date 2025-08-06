@@ -21,7 +21,13 @@
         </div>
         <div class="toolbar__item">
           <h2>Filter by Genre:</h2>
-          <FilterTabGroup @modelValue="selectGenre" :options="availableGenres" v-model="filterStore.genre"
+          <div v-if="isLoading" class="loading-genres">
+            Loading genres...
+          </div>
+          <div v-else-if="error" class="error-genres">
+            Failed to load genres: {{ error.message }}
+          </div>
+          <FilterTabGroup v-else @modelValue="selectGenre" :options="availableGenres" v-model="filterStore.genre"
             ariaLabel="Select genre" variant="genre" />
         </div>
         <div class="toolbar__item">
@@ -47,10 +53,10 @@ import BaseButton from '@/shared/components/ui/BaseButton.vue'
 import { useSyncFiltersWithUrl } from '@/features/filters/composables/useFiltersWithUrl'
 import FilterTabGroup from '@/features/filters/components/FilterTabGroup.vue'
 import { useGenreQuery } from '@/shared/composables/useGenreQuery.ts'
-const { genres: availableGenres } = useGenreQuery()
+const { genres: availableGenres, isLoading, error } = useGenreQuery()
 
 const route = useRoute()
-const dropdownOpen = ref(false)
+const dropdownOpen = ref(true)
 const filterStore = useTrackFilterStore()
 
 const sortOptions = ['title', 'artist', 'album', 'createdAt']
@@ -74,3 +80,17 @@ onMounted(() => {
   filterStore.initFromQuery(route.query)
 })
 </script>
+
+<style scoped>
+.loading-genres {
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: 0.5rem;
+}
+
+.error-genres {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  padding: 0.5rem;
+}
+</style>
