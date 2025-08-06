@@ -40,7 +40,6 @@ Sentry.init({
   dsn: "https://e75fe94935dfa10929ce7b39090132ab@o4509730787557376.ingest.de.sentry.io/4509790392025168",
   sendDefaultPii: true
 });
-myUndefinedFunction();
 app.use(pinia)
 app.use(router)
 
