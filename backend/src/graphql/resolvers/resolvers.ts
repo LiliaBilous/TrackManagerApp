@@ -25,7 +25,7 @@ function startTrackSwitcher() {
     setInterval(() => {
         currentTrackTitle = pickRandomTrackTitle();
         pubsub.publish(ACTIVE_TRACK_CHANGED, { activeTrackTitle: currentTrackTitle });
-    }, 2000);
+    }, 10000);
 }
 
 export async function initActiveTrackStreaming() {
