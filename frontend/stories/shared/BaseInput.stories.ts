@@ -126,7 +126,6 @@ Disabled.args = {
     id: 'input-disabled',
     ariaLabel: 'Disabled input',
     inputClass: 'disabled',
-    // disabled: true, // disabled передається через $attrs у v-bind
 }
 Disabled.parameters = {
     docs: {

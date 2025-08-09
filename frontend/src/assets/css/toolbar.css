@@ -122,7 +122,6 @@
   box-shadow: var(--box-shadow-1);
 }
 
-/* Container query: адаптація при вузькому контейнері */
 @container (max-width: 30rem) {
   .tab {
     padding: 0.3rem 0.6rem;
@@ -142,5 +141,14 @@
 
   .toolbar {
     padding: 0.5rem 0;
+  }
+}
+
+@media screen and (max-width: 30rem) {
+
+  .toolbar__search,
+  .toolbar__filter-input {
+    padding: 0.5rem;
+    font-size: 0.85rem;
   }
 }

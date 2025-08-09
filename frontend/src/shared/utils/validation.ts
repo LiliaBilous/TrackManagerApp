@@ -45,7 +45,6 @@ export function validateTrackForm(form: TrackForm): { isValid: boolean; errors: 
   return { isValid, errors }
 }
 
-// Validate audio file type and size
 export function validateAudioFile(file: File | null | undefined): {
   valid: boolean
   error: string

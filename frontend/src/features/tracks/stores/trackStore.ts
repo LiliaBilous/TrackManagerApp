@@ -27,7 +27,6 @@ export const useTrackStore = defineStore('trackStore', () => {
   const fetchTracks = async (): Promise<void> => {
     isLoading.value = true
 
-    // Очищаємо тільки кеш для треків, залишаючи жанри
     await apolloClient.cache.evict({ fieldName: 'tracks' })
     await apolloClient.cache.gc()
 

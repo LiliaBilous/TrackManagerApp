@@ -18,7 +18,6 @@ export async function getGenres(): Promise<Result<string[], Error>> {
     return err(e instanceof Error ? e : new Error('Unexpected error'))
   }
 }
-// === GET TRACK BY SLUG ===
 export async function getTrackBySlug(slug: string): Promise<Result<Track, Error>> {
   try {
     const { data } = await apolloClient.query<{ track: Track }>({

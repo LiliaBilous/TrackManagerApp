@@ -8,7 +8,6 @@ const httpLink = createHttpLink({
   uri: `${import.meta.env.VITE_API_URL}/graphql`,
 })
 
-
 // WebSocket link for subscriptions
 const wsLink = new GraphQLWsLink(
   createClient({

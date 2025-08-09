@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// main track schema
 export const TrackSchema = z.object({
   id: z.string(),
   title: z.string().min(1),
