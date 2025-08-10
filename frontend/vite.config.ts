@@ -14,6 +14,7 @@ export default defineConfig({
     filename: 'bundle-report.html',
     gzipSize: true,
     brotliSize: true,
+    template: 'sunburst',
   }), sentryVitePlugin({
     org: "lilias-projects",
     project: "musictrackmanager"
