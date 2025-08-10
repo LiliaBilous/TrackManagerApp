@@ -5,7 +5,12 @@ const routes = [
   { path: '/', component: App },
   {
     path: '/tracks',
-    component: () => import('@/features/tracks/views/TracksView.vue'),
+    component: () => import('@/pages/TracksView.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/pages/ErrorPage.vue'),
   },
 ]
 
