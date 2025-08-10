@@ -16,7 +16,7 @@ body .modal-overlay {
 
 .modal-content {
   background-color: var(--color-bg-dark);
-  width: 100%;
+  width: 90%;
   max-width: 50rem;
   padding: 1.5rem;
   border-radius: var(--border-radius-1);
