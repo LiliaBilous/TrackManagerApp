@@ -1,7 +1,8 @@
 .main {
+  flex: 1 1 auto;
   position: relative;
   z-index: 3;
-  margin-top: calc(var(--hero-height) * -0.45);
+  margin-top: calc(var(--hero-height) * -0.5);
   max-width: 86rem;
   width: 90%;
   background: var(--color-bg-glass);

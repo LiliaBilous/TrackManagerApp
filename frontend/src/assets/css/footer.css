@@ -10,8 +10,6 @@
   border: 1px solid var(--color-glow-soft);
   box-shadow: var(--box-shadow-main);
   container-type: inline-size;
-  margin-bottom: 1rem;
-  margin-top: auto;
 }
 
 .footer__container {
