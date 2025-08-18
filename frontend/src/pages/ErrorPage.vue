@@ -6,7 +6,9 @@ import BaseButton from '@/shared/components/ui/BaseButton.vue'
     <section class="error-section">
         <h2 class="error-title">404</h2>
         <p>The page you are looking for does not exist.</p>
-        <BaseButton class="button button-outline edit-button">Return to tracks</BaseButton>
+        <BaseButton class="button button-outline edit-button">
+            <router-link to="/">Return to tracks</router-link>
+        </BaseButton>
     </section>
 </template>
 
