@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue'
-import TracksView from '@/pages/TracksView.vue'
 import { ref, onMounted } from 'vue'
 const isMobile = ref(false)
 onMounted(() => {
@@ -13,7 +12,7 @@ onMounted(() => {
   <AppLayout title="Track Manager">
     <Suspense>
       <template #default>
-        <TracksView />
+        <router-view></router-view>
       </template>
       <template #fallback>
         <div class="async-tracks-placeholder">
