@@ -6,16 +6,17 @@
       + Create Track
     </BaseButton>
     <div class="tracks-container">
-      <div v-if="trackStore.isLoading" data-testid="loading-tracks" data-loading="true"
-        class="async-tracks-placeholder">
-        Loading tracks...
+      <template v-if="trackStore.isLoading">
+        <div data-testid="loading-tracks" data-loading="true" class="async-tracks-placeholder"> Loading tracks...</div>
         <div class="spinner" data-testid="loading-indicator" data-loading="true"></div>
-      </div>
-      <AsyncTrackList v-if="!trackStore.isLoading" :tracks="trackStore.tracks" @edit="openEditModal"
-        @delete="openConfirmDelete" @upload="openUploadModal" @reset="handleFileRemove" @bulk-delete="deleteSelected" />
+      </template>
+      <template v-else>
+        <AsyncTrackList :tracks="trackStore.tracks" @edit="openEditModal" @delete="openConfirmDelete"
+          @upload="openUploadModal" @reset="handleFileRemove" @bulk-delete="deleteSelected" />
+        <PaginationControls v-if="trackStore.totalPages > 1" data-testid="pagination" :current-page="filterStore.page"
+          :total-pages="trackStore.totalPages" @change="onPageChange" />
+      </template>
     </div>
-    <PaginationControls v-if="!trackStore.isLoading && trackStore.totalPages > 1" data-testid="pagination"
-      :current-page="filterStore.page" :total-pages="trackStore.totalPages" @change="onPageChange" />
   </div>
 </template>
 
