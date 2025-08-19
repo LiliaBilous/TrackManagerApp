@@ -25,8 +25,7 @@ onMounted(() => {
             <div class="hero__background" :class="{ 'loaded': isLoaded }">
                 <img src="/image-25.avif" alt="Placeholder" class="placeholder" />
 
-                <img src="/image-desktop.avif" loading="lazy" alt="Colorful audio waveform hero background"
-                    @load="onImageLoad" />
+                <img src="/image-desktop.avif" alt="Colorful audio waveform hero background" @load="onImageLoad" />
             </div>
             <div class="hero__content">
                 <ActiveTrack />

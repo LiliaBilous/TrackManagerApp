@@ -121,6 +121,23 @@
         font-size: 4rem;
         font-weight: 700;
       }
+
+      .main {
+        flex: 1 1 auto;
+        position: relative;
+        z-index: 3;
+        margin-top: calc(var(--hero-height) * -0.5);
+        max-width: 86rem;
+        width: 90%;
+        background: var(--color-bg-glass);
+        border: 1px solid var(--color-glow-soft);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: var(--border-radius-1);
+        padding: 2rem;
+        box-shadow: var(--box-shadow-main);
+      }
+
       .active-track-container {
         min-height: 3rem;
         width: 25rem;
