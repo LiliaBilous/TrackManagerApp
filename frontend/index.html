@@ -10,7 +10,7 @@
     <link
       rel="preload"
       as="image"
-      href="/image-desktop.avif"
+      href="/image-25.avif"
       type="image/avif"
       media="(min-width: 768px)"
     />
@@ -28,7 +28,162 @@
       type="font/ttf"
       crossorigin
     />
-    <style></style>
+    <style>
+      @font-face {
+        font-family: 'Montserrat';
+        src: url('/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+        font-weight: 100 400 500 600 700 800 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      [class*='__container'] {
+        width: 100%;
+        max-width: 85rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      body {
+        background-color: var(--color-bg-dark);
+        color: var(--color-text-base);
+        font-size: 16px;
+        line-height: 1.625;
+        font-weight: 400;
+        font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      #app .layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+        overflow: auto;
+        gap: 1rem;
+        container-type: inline-size;
+      }
+
+      .hero {
+        position: relative;
+        height: var(--hero-height);
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .hero__background {
+        position: relative;
+      }
+
+      .hero__background .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        object-fit: cover;
+        filter: blur(20px);
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .hero__background img:not(.placeholder) {
+        width: 100%;
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+        object-fit: cover;
+        object-position: center;
+        position: absolute;
+      }
+
+      .hero__background.loaded img:not(.placeholder) {
+        opacity: 1;
+      }
+
+      .hero__content {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 2;
+
+        text-align: center;
+        color: var(--color-text-base);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero__title {
+        margin-top: 1rem;
+        line-height: 1.2;
+        font-size: 4rem;
+        font-weight: 700;
+      }
+      .active-track-container {
+        min-height: 3rem;
+        width: 25rem;
+      }
+
+      .active-track {
+        background: var(--color-bg-glass);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius-0-5);
+        border: 1px solid var(--color-glow-soft);
+
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: space-between;
+
+        font-size: 1rem;
+        color: var(--color-text-base);
+        max-width: 100%;
+        margin: 1rem auto;
+        transition: all 0.4s ease;
+      }
+      .footer {
+        min-height: 3rem;
+        max-width: 86rem;
+        width: 90%;
+        padding: 1rem 2rem;
+        background: var(--color-bg-glass);
+        border-radius: var(--border-radius-1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--color-glow-soft);
+        box-shadow: var(--box-shadow-main);
+        container-type: inline-size;
+      }
+
+      .footer__container {
+        min-height: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer__text {
+        color: var(--color-text-base);
+      }
+
+      .footer__copyright {
+        color: var(--color-text-muted);
+      }
+
+      .footer__link {
+        color: var(--color-primary-cyan);
+        transition: var(--transition);
+      }
+
+      .footer__link:hover {
+        color: var(--color-primary-blue);
+      }
+    </style>
 
     <title>Music Track Manager</title>
   </head>
